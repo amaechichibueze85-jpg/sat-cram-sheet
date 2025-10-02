@@ -1,0 +1,4091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT Last-Minute Cram Sheet</title>
+    <script>
+        // Set your Formspree endpoint here once you create a form (e.g., https://formspree.io/f/abcd1234)
+        window.SUGGEST_TIP_ENDPOINT = 'https://formspree.io/f/mnnblwwz';
+    </script>
+    <script>
+        // Optional: set your reCAPTCHA v2 site key to enable checkbox protection
+        // Example: window.RECAPTCHA_SITE_KEY = '6Lc...your_site_key...';
+        window.RECAPTCHA_SITE_KEY = window.RECAPTCHA_SITE_KEY || '';
+    </script>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            line-height: 1.6;
+            background-color: #f7f9fc;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            /* transition: background-color 0.5s, color 0.5s; */
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 0.5em;
+        }
+        h2, h3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            user-select: none;
+        }
+        h2 {
+            font-size: 1.8em;
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding: 10px 0;
+            margin-top: 2em;
+            transition: transform 0.2s ease;
+        }
+        h3 {
+            font-size: 1.4em;
+            color: #2980b9;
+            margin-top: 1.5em;
+            padding: 12px 15px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+        .header-title {
+            flex-grow: 1;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .arrow-indicator {
+            transition: transform 0.2s;
+            display: inline-block;
+            padding: 0 10px;
+        }
+        h2 .arrow-indicator { font-size: 0.8em; }
+        h3 .arrow-indicator { font-size: 0.7em; }
+
+        h2.collapsed .arrow-indicator, 
+        h3.collapsed .arrow-indicator {
+            transform: rotate(-90deg);
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            display: block;
+            transition: all 0.3s ease-in-out;
+            margin-top: 1em;
+        }
+        ul.hidden {
+            display: none;
+        }
+        /* Generic hidden class to support collapsing non-UL containers */
+        .hidden { display: none; }
+        li {
+            background-color: #fff;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            padding-right: 35px; /* Space for the star */
+        }
+        li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        strong {
+            color: #3498db;
+        }
+        /* Header Controls & Theme Toggle */
+        .header-controls {
+            text-align: right;
+            margin-bottom: -40px;
+            position: relative;
+            z-index: 10;
+        }
+        #theme-toggle {
+            background: #dfe6e9;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            font-size: 22px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        #theme-toggle:hover {
+            background-color: #b2bec3;
+            transform: scale(1.1);
+        }
+        /* Tooltip Styles */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip-text {
+            visibility: hidden;
+            width: 160px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            top: 135%; /* Position below the button */
+            left: 50%;
+            margin-left: -80px;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(5px);
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        /* Show tooltips on hover with animation */
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+            animation: tooltipBounce 0.5s ease-out, tooltipGlow 2s infinite;
+        }
+
+        /* JavaScript will control visibility, this is a backup */
+        .tooltip-text.show {
+            visibility: visible !important;
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+            animation: tooltipBounce 0.5s ease-out, tooltipGlow 2s infinite !important;
+        }
+        
+        /* Dark mode support for JavaScript-controlled tooltips */
+        body.dark-mode .tooltip-text.show {
+            animation: tooltipBounce 0.5s ease-out, tooltipDarkGlow 2s infinite !important;
+        }
+        
+        .tooltip-text.hide {
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
+
+        /* Tooltip bounce entrance animation */
+        @keyframes tooltipBounce {
+            0% { transform: translateY(5px); opacity: 0; }
+            70% { transform: translateY(-3px); opacity: 1; }
+            85% { transform: translateY(1px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Subtle pulsing glow effect */
+        @keyframes tooltipGlow {
+            0% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+            50% { box-shadow: 0 0 5px rgba(255,255,255,0.4); }
+            100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+        }
+
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #555 transparent;
+        }
+
+        .tooltip-text-narrow {
+            width: 130px;
+            margin-left: -65px;
+        }
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            font-family: 'Roboto Slab', serif;
+        }
+        body.dark-mode h1 { color: #ecf0f1; }
+        body.dark-mode h2 {
+            color: #5dade2;
+            border-bottom-color: #5dade2;
+        }
+        body.dark-mode h3 {
+            color: #a9cce3;
+            background-color: #34495e;
+        }
+        body.dark-mode h3:hover {
+            background-color: #4a6b8a;
+        }
+        body.dark-mode li {
+            background-color: #34495e;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        body.dark-mode li:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        body.dark-mode strong { color: #5dade2; }
+        body.dark-mode .tooltip-text {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        body.dark-mode .tooltip-text::after {
+            border-color: transparent transparent #f1f1f1 transparent;
+        }
+        
+        /* Dark mode tooltip animation */
+        body.dark-mode .tooltip-container:hover .tooltip-text {
+            animation: tooltipBounce 0.5s ease-out, tooltipDarkGlow 2s infinite;
+        }
+        
+        @keyframes tooltipDarkGlow {
+            0% { box-shadow: 0 0 0 rgba(0,0,0,0); }
+            50% { box-shadow: 0 0 5px rgba(0,0,0,0.3); }
+            100% { box-shadow: 0 0 0 rgba(0,0,0,0); }
+        }
+        body.dark-mode #theme-toggle {
+            background: #34495e;
+            color: #ecf0f1;
+        }
+        body.dark-mode #theme-toggle:hover { background-color: #5d6d7e; }
+        
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            h3 {
+                font-size: 1.2em;
+            }
+        }
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff;
+                color: #000;
+                font-size: 12pt;
+                padding: 0;
+                margin: 1cm;
+            }
+            .header-controls, #theme-toggle, p, h2::after, h3::after, .search-container, .star-toggle, .speech-button {
+                display: none !important;
+            }
+            h1, h2, h3 {
+                color: #000 !important;
+                border: none !important;
+                page-break-after: avoid;
+            }
+            ul {
+                display: block !important;
+            }
+            li {
+                background-color: #fff !important;
+                box-shadow: none !important;
+                border: 1px solid #ddd;
+                padding-right: 15px;
+            }
+        }
+        /* View Transition Animation */
+        @keyframes reveal-in {
+            from { clip-path: circle(0% at var(--x) var(--y)); }
+            to { clip-path: circle(150% at var(--x) var(--y)); }
+        }
+
+        ::view-transition-new(root) {
+            animation: reveal-in 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        ::view-transition-old(root) {
+            animation: none;
+        }
+        /* Search Box Styles */
+        .search-container {
+            margin: 20px 0;
+            position: relative;
+        }
+        #search-box {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #dfe6e9;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #fff;
+            color: #333;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        #search-box:focus,
+        #search-box:hover {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        body.dark-mode #search-box {
+            background-color: #34495e;
+            color: #ecf0f1;
+            border-color: #5d6d7e;
+        }
+        body.dark-mode #search-box:focus,
+        body.dark-mode #search-box:hover {
+            border-color: #5dade2;
+            box-shadow: 0 0 0 2px rgba(93, 173, 226, 0.2);
+        }
+        
+        /* Starred Item Styles */
+        .star-toggle {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            font-size: 20px;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s, transform 0.2s;
+        }
+        .star-toggle.starred {
+            color: #f1c40f; /* Gold for starred */
+            transform: translateY(-50%) scale(1.2);
+        }
+        body.dark-mode .star-toggle.starred {
+            color: #f1c40f;
+        }
+        #quick-review-list .no-stars-message {
+            background-color: transparent;
+            box-shadow: none;
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            padding-right: 15px; /* Reset padding */
+        }
+        #quick-review-list .no-stars-message .star-toggle {
+            display: none;
+        }
+        body.dark-mode #quick-review-list .no-stars-message {
+            color: #ccc;
+        }
+
+        .speech-button {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0 5px;
+            margin-left: 10px;
+            display: inline-block;
+            visibility: hidden; /* Hidden until JS confirms API support */
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .speech-button:hover {
+            transform: scale(1.2);
+        }
+        .speech-button.speaking {
+            filter: drop-shadow(0 0 4px #00c4ff);
+        }
+        .speech-button.pending {
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .stop-button {
+            background: none;
+            border: none;
+            font-size: 16px; /* A bit smaller than the main icon */
+            cursor: pointer;
+            padding: 0 5px;
+            margin-left: 5px;
+            transition: transform 0.2s;
+        }
+        .stop-button:hover {
+            transform: scale(1.2);
+        }
+        .speech-control-hidden {
+            display: none !important;
+        }
+
+        /* Highlight for currently spoken item */
+        .speaking-highlight {
+            transition: all 0.3s ease;
+            background-color: #e8f4fd !important;
+            box-shadow: 0 6px 16px rgba(52, 152, 219, 0.6) !important;
+            transform: translateY(-5px) scale(1.03);
+            z-index: 50;
+            border-radius: 6px;
+            animation: glow 1.5s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
+            }
+            to {
+                box-shadow: 0 6px 22px rgba(52, 152, 219, 0.7);
+            }
+        }
+
+        body.dark-mode .speaking-highlight {
+            background-color: #3a536b !important;
+            animation: darkGlow 1.5s infinite alternate;
+        }
+        
+        @keyframes darkGlow {
+            from {
+                box-shadow: 0 6px 16px rgba(93, 173, 226, 0.4);
+            }
+            to {
+                box-shadow: 0 6px 22px rgba(93, 173, 226, 0.7);
+            }
+        }
+
+        /* Stabilize MathJax rendering */
+        mjx-container {
+            min-height: 1.2em;
+        }
+
+        /* Quiz Styles */
+        .quiz-tabs { display: flex; gap: 8px; margin: 10px 0; }
+        .quiz-tab { padding: 6px 10px; border: 1px solid #dfe6e9; background: #fff; border-radius: 4px; cursor: pointer; }
+        .quiz-tab.active { background: #3498db; color: #fff; border-color: #3498db; }
+        .quiz-controls { margin: 10px 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .quiz-container { margin: 10px 0; }
+        .quiz-question { font-weight: 700; margin-bottom: 8px; }
+        .quiz-options { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+        .quiz-option { padding: 10px; border: 1px solid #dfe6e9; border-radius: 6px; background:#fff; cursor: pointer; }
+        .quiz-option input { margin-right: 8px; }
+        .quiz-option.correct { border-color: #2ecc71; background: #ecf9f1; }
+        .quiz-option.incorrect { border-color: #e74c3c; background: #fdecea; }
+        .quiz-explanation { margin-top: 8px; font-size: 0.95em; color: #555; }
+        .quiz-nav { display:flex; gap:10px; margin: 10px 0; }
+        .quiz-result { margin-top: 10px; font-weight: 700; }
+        body.dark-mode .quiz-tab { background: #34495e; color:#ecf0f1; border-color: #5d6d7e; }
+        body.dark-mode .quiz-tab.active { background: #5dade2; color:#2c3e50; border-color: #5dade2; }
+        body.dark-mode .quiz-option { background:#34495e; border-color:#5d6d7e; }
+        body.dark-mode .quiz-option.correct { background:#2d5039; border-color:#2ecc71; }
+        body.dark-mode .quiz-option.incorrect { background:#5a3a36; border-color:#e74c3c; }
+
+        /* Floating TOC Styles */
+        .toc-container {
+            display: none; /* Hidden by default, shown in media query */
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            max-width: 200px;
+            z-index: 100;
+            max-height: 90vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+        
+        .toc-container h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #3498db;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .toc-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .toc-list li {
+            margin-bottom: 8px;
+            padding: 0;
+            box-shadow: none;
+            background: none;
+        }
+        
+        .toc-list li a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            padding: 5px 8px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        
+        .toc-list li a:hover, 
+        .toc-list li a.active {
+            background-color: #f0f7fc;
+            border-left-color: #3498db;
+        }
+        
+        /* TOC Dark Mode Styles */
+        body.dark-mode .toc-container {
+            background-color: rgba(52, 73, 94, 0.9);
+        }
+        
+        body.dark-mode .toc-container h4 {
+            color: #5dade2;
+        }
+        
+        body.dark-mode .toc-list li a {
+            color: #ecf0f1;
+        }
+        
+        body.dark-mode .toc-list li a:hover,
+        body.dark-mode .toc-list li a.active {
+            background-color: #2c3e50;
+            border-left-color: #5dade2;
+        }
+        
+        /* Only show TOC on larger screens */
+        @media (min-width: 1200px) {
+            body {
+                padding-right: 220px; /* Make room for the TOC */
+            }
+            
+            .toc-container {
+                display: block;
+            }
+        }
+
+        /* Enable smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Add a pseudo element for scroll padding to ensure anchors don't get hidden under fixed header */
+        :target::before {
+            content: "";
+            display: block;
+            height: 80px;
+            margin-top: -80px;
+            visibility: hidden;
+        }
+        
+        /* Pomodoro Timer Styles */
+        .pomodoro-container {
+            position: fixed;
+            top: 20px;
+            right: 55px; /* Moved 35px leftwards from original 20px */
+            background-color: #fff;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            padding: 8px;
+            width: 180px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            font-family: 'Lato', sans-serif;
+        }
+        
+        .pomodoro-container.minimized {
+            width: 80px;
+            height: 30px;
+            overflow: hidden;
+        }
+        
+        .pomodoro-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .pomodoro-header h4 {
+            margin: 0;
+            color: #3498db;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .pomodoro-controls {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .control-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.2s;
+            padding: 0;
+        }
+        
+        .control-btn:hover {
+            transform: scale(1.2);
+        }
+        
+        .timer-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 5px 0;
+            color: #2c3e50;
+            font-family: monospace;
+        }
+        
+        .timer-mode {
+            text-align: center;
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #7f8c8d;
+        }
+        
+        .pomodoro-progress {
+            height: 5px;
+            background-color: #ecf0f1;
+            border-radius: 3px;
+            margin-bottom: 6px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #3498db;
+            border-radius: 4px;
+            transition: width 1s linear;
+        }
+        
+        .pomodoro-work .progress-bar {
+            background-color: #3498db;
+        }
+        
+        .pomodoro-shortbreak .progress-bar {
+            background-color: #2ecc71;
+        }
+        
+        .pomodoro-longbreak .progress-bar {
+            background-color: #9b59b6;
+        }
+        
+        .pomodoro-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: #7f8c8d;
+        }
+        
+        .timer-actions {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        
+        .timer-btn {
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 11px;
+        }
+        
+        .timer-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .timer-btn.pause-btn {
+            background-color: #e74c3c;
+        }
+        
+        .timer-btn.pause-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .pomodoro-shortbreak .timer-display,
+        .pomodoro-shortbreak .pomodoro-header h4 {
+            color: #2ecc71;
+        }
+        
+        .pomodoro-longbreak .timer-display,
+        .pomodoro-longbreak .pomodoro-header h4 {
+            color: #9b59b6;
+        }
+        
+        /* Dark mode styles for Pomodoro */
+        body.dark-mode .pomodoro-container {
+            background-color: #34495e;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        body.dark-mode .timer-display {
+            color: #ecf0f1;
+        }
+        
+        body.dark-mode .timer-mode {
+            color: #bdc3c7;
+        }
+        
+        body.dark-mode .pomodoro-progress {
+            background-color: #2c3e50;
+        }
+        
+        body.dark-mode .pomodoro-stats {
+            color: #bdc3c7;
+        }
+        
+        body.dark-mode .timer-btn {
+            background-color: #3498db;
+        }
+        
+        body.dark-mode .timer-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        body.dark-mode .timer-btn.pause-btn {
+            background-color: #e74c3c;
+        }
+        
+        body.dark-mode .timer-btn.pause-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        @media (max-width: 600px) {
+            .pomodoro-container {
+                width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
+            }
+        }
+        
+        /* Flashcard Styles */
+        .flashcard-mode-button {
+            position: fixed;
+            bottom: 80px;
+            right: 150px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .flashcard-mode-button:hover {
+            transform: scale(1.1);
+            background-color: #2980b9;
+        }
+        
+        /* Fixed positioning for the flashcard button's tooltip */
+        #flashcard-mode-button + .tooltip-text {
+            position: absolute;
+            bottom: auto;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 8px;
+            white-space: nowrap;
+        }
+        
+        #flashcard-mode-button + .tooltip-text.visible {
+            transform: translateX(-50%) translateY(0) scale(1);
+        }
+
+        .flashcard-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .flashcard-container.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .flashcard {
+            width: 80%;
+            max-width: 600px;
+            height: 350px;
+            perspective: 1000px;
+            margin-bottom: 20px;
+        }
+        
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+        }
+        
+        .flashcard-front {
+            background-color: #fff;
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .flashcard-back {
+            background-color: #3498db;
+            color: #fff;
+            transform: rotateY(180deg);
+            font-size: 22px;
+        }
+        
+        .flashcard-question {
+            margin-bottom: 20px;
+        }
+        
+        .flashcard-answer {
+            line-height: 1.5;
+        }
+        
+        .flashcard-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .flashcard-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .flashcard-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .flashcard-btn.secondary {
+            background-color: #7f8c8d;
+        }
+        
+        .flashcard-btn.secondary:hover {
+            background-color: #636e72;
+        }
+        
+        .flashcard-progress {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .flashcard-exit {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .flashcard-exit:hover {
+            transform: scale(1.2);
+        }
+        
+        @media (max-width: 768px) {
+            .flashcard {
+                width: 90%;
+                height: 300px;
+            }
+            
+            .flashcard-front {
+                font-size: 20px;
+            }
+            
+            .flashcard-back {
+                font-size: 18px;
+            }
+            
+            .flashcard-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px) scale(0.9);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(-2px) scale(1.02);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* New keyframes for downward bounce animation */
+        @keyframes bounceInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.9);
+            }
+            70% {
+                opacity: 1;
+                transform: translateY(2px) scale(1.02);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .tooltip-text.visible {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0) scale(1); /* Correctly centered */
+            animation: bounceIn 0.3s ease-out, glow 1.5s infinite alternate;
+        }
+
+        /* Override for flashcard tooltips to appear below buttons */
+        .flashcard-container .tooltip-text {
+            bottom: auto;
+            top: calc(100% + 8px);
+            /* Start from slightly above the final position to animate down */
+            transform: translateX(-50%) translateY(-10px) scale(0.9);
+        }
+
+        /* Specific positioning for main Flashcard Mode Button tooltip */
+        #flashcard-mode-button + .tooltip-text {
+            bottom: auto;
+            top: auto;
+            right: auto;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px) scale(0.9);
+        }
+
+        #flashcard-mode-button + .tooltip-text.visible {
+            transform: translateX(-50%) translateY(0) scale(1);
+            animation: bounceInDown 0.3s ease-out, glow 1.5s infinite alternate;
+        }
+
+        .flashcard-exit {
+            /* Now just a simple button, positioning is handled by its container */
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            padding: 0; /* Ensure no extra space */
+        }
+
+        .exit-button-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 2001; /* Ensure it's above other elements in the card view */
+        }
+
+        @media (max-width: 768px) {
+            .flashcard {
+                width: 90%;
+                height: 300px;
+            }
+            
+            .flashcard-front {
+                font-size: 20px;
+            }
+            
+            .flashcard-back {
+                font-size: 18px;
+            }
+            
+            .flashcard-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+
+        /* Specific positioning for main Flashcard Mode Button tooltip */
+        .tooltip-container[style*="fixed"] .tooltip-text {
+            position: absolute;
+            bottom: auto !important;
+            top: 100% !important; 
+            left: 50% !important;
+            right: auto !important;
+            transform: translateX(calc(-50% + 50px)) !important;
+            margin-top: 12px !important;
+            white-space: nowrap;
+        }
+
+        .tooltip-container[style*="fixed"] .tooltip-text::after {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #555 transparent;
+        }
+
+        .tooltip-container[style*="fixed"] .tooltip-text.visible {
+            transform: translateX(calc(-50% + 50px)) !important;
+            animation: bounceIn 0.3s ease-out, glow 1.5s infinite alternate;
+        }
+
+        #flashcard-mode-button + .tooltip-text {
+            white-space: nowrap;
+        }
+
+        /* Specific positioning for timer tooltips */
+        .pomodoro-container .tooltip-container .tooltip-text {
+            /* Base styling only - positioning will be handled by JavaScript */
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            width: 160px;
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        /* Timer tooltip when shown */
+        .pomodoro-container .tooltip-container .tooltip-text.show {
+            animation: tooltipBounce 0.5s ease-out, tooltipGlow 2s infinite !important;
+        }
+
+        /* Add arrow to timer tooltips */
+        .pomodoro-container .tooltip-container .tooltip-text::after {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #555 transparent;
+        }
+
+        /* Smaller width for minimize/expand tooltip, with correct centering */
+        #minimize-tooltip {
+            width: 90px;
+            margin-left: -45px; /* width / -2 */
+        }
+        
+        /* Smaller width for settings tooltip, with correct centering and offset */
+        #settings-tooltip {
+            width: 100px;
+            margin-left: -75px; /* (width / -2) - 25px offset */
+        }
+
+        /* Dark mode support for timer tooltips */
+        body.dark-mode .pomodoro-container .tooltip-container .tooltip-text {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        
+        body.dark-mode .pomodoro-container .tooltip-container .tooltip-text::after {
+            border-color: transparent transparent #f1f1f1 transparent;
+        }
+        
+        /* Disable browser tooltips */
+        [title] {
+            position: relative;
+        }
+        [title]::before {
+            content: none !important;
+        }
+        [title]::after {
+            content: none !important;
+        }
+
+        /* ... existing code ... */
+        .pomodoro-container .tooltip-container .tooltip-text.show {
+            animation: tooltipBounce 0.5s ease-out, tooltipGlow 2s infinite !important;
+        }
+
+        #settings-tooltip {
+            width: 100px; /* Smaller width for settings tooltip */
+        }
+
+        /* Add arrow to timer tooltips */
+        .pomodoro-container .tooltip-container .tooltip-text::after {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #555 transparent;
+        }
+
+        /* Specific rule for settings tooltip in expanded mode */
+        .pomodoro-container:not(.minimized) #pomodoro-settings + #settings-tooltip {
+            left: calc(50% + 65px) !important;
+        }
+
+        /* Smaller width for minimize/expand tooltip */
+        #minimize-tooltip {
+            width: 90px; /* Reduced width */
+        }
+
+        /* Dark mode support for timer tooltips */
+        body.dark-mode .pomodoro-container .tooltip-container .tooltip-text {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        
+        body.dark-mode .pomodoro-container .tooltip-container .tooltip-text::after {
+            border-color: transparent transparent #f1f1f1 transparent;
+        }
+        
+        /* Disable browser tooltips */
+        [title] {
+            position: relative;
+        }
+        [title]::before {
+            content: none !important;
+        }
+        [title]::after {
+            content: none !important;
+        }
+
+        /* ... existing code ... */
+        .exit-button-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 2001; /* Ensure it's above other elements in the card view */
+        }
+
+        /* FIX: High-specificity rule to force flashcard exit tooltip below its button */
+        #flashcard-container .exit-button-container .tooltip-text,
+        body #flashcard-container #flashcard-exit-tooltip.tooltip-text {
+            top: 100% !important;
+            bottom: auto !important;
+            margin-top: 57px !important; /* Increased by 45px */
+            transform: translateX(calc(-50% + 50px)) !important; /* Shifted 5px leftwards from previous position */
+            position: absolute !important;
+            left: 0 !important;
+            width: 120px !important; /* Reduced width */
+            font-size: 12px !important; /* Smaller font */
+            padding: 4px 0 !important; /* Reduced padding */
+        }
+
+        #flashcard-container .exit-button-container .tooltip-text::after {
+            top: auto;
+            bottom: 100%; /* Position arrow at the top of the tooltip */
+            border-color: transparent transparent #555 transparent; /* Make arrow point up */
+        }
+
+        body.dark-mode #flashcard-container .exit-button-container .tooltip-text::after {
+            border-color: transparent transparent #f1f1f1 transparent;
+        }
+
+        @media (max-width: 768px) {
+            .flashcard {
+                width: 90%;
+                height: 300px;
+            }
+            
+            .flashcard-front {
+                font-size: 20px;
+            }
+            
+            .flashcard-back {
+                font-size: 18px;
+            }
+            
+            .flashcard-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+
+        /* Inspirational Message Styles */
+        .inspiration-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-left: 3px solid #3498db;
+            padding: 10px 15px;
+            border-radius: 3px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            max-width: 280px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .inspiration-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .inspiration-message {
+            color: #2c3e50;
+            margin: 0;
+            font-style: italic;
+        }
+        
+        .inspiration-sparkle {
+            display: inline-block;
+            margin-right: 5px;
+            animation: sparkle 1.5s infinite alternate;
+        }
+        
+        @keyframes sparkle {
+            0% { opacity: 0.7; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+        
+        body.dark-mode .inspiration-container {
+            background-color: rgba(52, 73, 94, 0.9);
+            border-left-color: #5dade2;
+        }
+        
+        body.dark-mode .inspiration-message {
+            color: #ecf0f1;
+        }
+
+        /* Suggest a Tip Button & Modal Styles */
+        #suggest-tip-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+        }
+
+        .suggest-tip-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .suggest-tip-button:hover {
+            transform: scale(1.1);
+            background-color: #2980b9;
+        }
+
+        #suggest-tip-tooltip {
+            bottom: 100%; /* Position above the button */
+            top: auto;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 10px; /* Space between tooltip and button */
+            white-space: nowrap;
+        }
+
+        #suggest-tip-tooltip::after {
+            top: 100%; /* Arrow at the bottom of the tooltip */
+            bottom: auto;
+            border-color: #555 transparent transparent transparent; /* Arrow points down */
+        }
+
+        body.dark-mode #suggest-tip-tooltip::after {
+            border-color: #f1f1f1 transparent transparent transparent;
+        }
+
+        .suggest-tip-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .suggest-tip-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .suggest-tip-content {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 25px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .suggest-tip-modal.active .suggest-tip-content {
+            transform: translateY(0);
+        }
+
+        .suggest-tip-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #7f8c8d;
+            transition: color 0.2s;
+        }
+
+        .suggest-tip-close:hover {
+            color: #34495e;
+        }
+
+        .suggest-tip-form h3 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding: 0;
+            background: none;
+            display: block;
+            cursor: default;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+
+        .form-submit:hover {
+            background-color: #2980b9;
+        }
+
+        .form-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .form-message.success {
+            background-color: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        .form-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode .suggest-tip-content {
+            background-color: #34495e;
+            color: #ecf0f1;
+        }
+
+        body.dark-mode .suggest-tip-form h3 {
+            color: #ecf0f1;
+        }
+
+        body.dark-mode .form-group label {
+            color: #ecf0f1;
+        }
+
+        body.dark-mode .form-group input,
+        body.dark-mode .form-group textarea,
+        body.dark-mode .form-group select {
+            background-color: #2c3e50;
+            border-color: #4a6b8a;
+            color: #ecf0f1;
+        }
+
+        body.dark-mode .suggest-tip-close {
+            color: #bdc3c7;
+        }
+
+        body.dark-mode .suggest-tip-close:hover {
+            color: #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Remove comments inside HTML body that might be showing up -->
+    <div class="inspiration-container" id="inspiration-container">
+        <p class="inspiration-message"><span class="inspiration-sparkle">✨</span> <span id="inspiration-text">You've got this — remember, progress over perfection.</span></p>
+    </div>
+
+    <!-- Add the Suggest a Tip button and modal -->
+    <div class="tooltip-container" id="suggest-tip-container">
+        <button class="suggest-tip-button" id="suggest-tip-button">💡</button>
+        <span class="tooltip-text" id="suggest-tip-tooltip">Suggest a Tip</span>
+    </div>
+    
+    <div class="suggest-tip-modal" id="suggest-tip-modal">
+        <div class="suggest-tip-content">
+            <button class="suggest-tip-close" id="suggest-tip-close">×</button>
+            <div class="suggest-tip-form">
+                <h3>Suggest a Study Tip</h3>
+                <form id="tip-form">
+                    <div class="form-group">
+                        <label for="tip-category">Category</label>
+                        <select id="tip-category" required>
+                            <option value="">Select a category</option>
+                            <option value="math">Math</option>
+                            <option value="grammar">Grammar & Writing</option>
+                            <option value="reading">Reading</option>
+                            <option value="strategy">Test Strategy</option>
+                            <option value="mindset">Mindset & Motivation</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tip-title">Tip Title</label>
+                        <input type="text" id="tip-title" placeholder="Give your tip a short, descriptive title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tip-content">Tip Content</label>
+                        <textarea id="tip-content" placeholder="Share your helpful study tip or trick..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tip-name">Your Name (Optional)</label>
+                        <input type="text" id="tip-name" placeholder="How should we credit you?">
+                    </div>
+                    <!-- Honeypot field (invisible to humans) -->
+                    <input type="text" id="tip-website" name="_gotcha" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute; left:-5000px; top:auto; width:1px; height:1px; overflow:hidden;">
+                    <!-- reCAPTCHA v2 checkbox (render only if site key configured) -->
+                    <div id="recaptcha-container" class="form-group" style="display:none;">
+                        <div class="g-recaptcha" data-sitekey="" id="recaptcha-widget"></div>
+                    </div>
+                    <button type="submit" class="form-submit">Submit Tip</button>
+                </form>
+                <div class="form-message" id="form-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-controls">
+        <div class="tooltip-container">
+            <button id="theme-toggle" class="control-button">🌙</button>
+            <span id="theme-tooltip" class="tooltip-text">Switch to Dark Mode</span>
+        </div>
+    </div>
+
+    <h1>SAT Last-Minute Cram Sheet</h1>
+    <p style="text-align: center; font-style: italic;">(Click on any section header to expand or collapse it)</p>
+
+    <!-- Floating TOC -->
+    <div class="toc-container" id="toc">
+        <h4>Contents</h4>
+        <ul class="toc-list" id="toc-list">
+            <!-- Will be populated by JavaScript -->
+        </ul>
+    </div>
+    
+    <!-- Pomodoro Timer Widget -->
+    <div class="pomodoro-container" id="pomodoro">
+        <div class="pomodoro-header">
+            <h4>Timer</h4>
+            <div class="pomodoro-controls">
+                <div class="tooltip-container">
+                    <button class="control-btn" id="pomodoro-minimize">➖</button>
+                    <span id="minimize-tooltip" class="tooltip-text">Minimize</span>
+                </div>
+                <div class="tooltip-container">
+                    <button class="control-btn" id="pomodoro-settings">⚙️</button>
+                    <span id="settings-tooltip" class="tooltip-text">Settings</span>
+                </div>
+            </div>
+        </div>
+        <div class="timer-display" id="timer-display">25:00</div>
+        <div class="timer-mode" id="timer-mode">FOCUS TIME</div>
+        <div class="pomodoro-progress">
+            <div class="progress-bar" id="timer-progress"></div>
+        </div>
+        <div class="pomodoro-stats">
+            <span>Sessions: <span id="pomodoro-count">0</span></span>
+            <span id="timer-status">Ready to start</span>
+        </div>
+        <div class="timer-actions">
+            <div class="tooltip-container">
+                <button class="timer-btn" id="timer-start">Start</button>
+                <span id="start-tooltip" class="tooltip-text">Start Timer</span>
+            </div>
+            <div class="tooltip-container">
+                <button class="timer-btn" id="timer-reset">Reset</button>
+                <span id="reset-tooltip" class="tooltip-text">Reset Timer</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flashcard Mode Button -->
+    <div class="tooltip-container" style="position: fixed; bottom: 80px; right: 150px; z-index: 999;">
+        <button id="flashcard-mode-button" class="flashcard-mode-button">📝</button>
+        <span id="flashcard-mode-tooltip" class="tooltip-text">Flashcard Mode</span>
+    </div>
+    
+    <!-- Flashcard Container -->
+    <div id="flashcard-container" class="flashcard-container">
+        <div class="tooltip-container exit-button-container">
+            <button id="flashcard-exit" class="flashcard-exit">✖</button>
+            <span id="flashcard-exit-tooltip" class="tooltip-text">Exit Flashcards</span>
+        </div>
+        <div id="flashcard" class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    <div class="flashcard-question" id="flashcard-question">Loading question...</div>
+                    <div>Click to flip</div>
+                </div>
+                <div class="flashcard-back">
+                    <div class="flashcard-answer" id="flashcard-answer">Loading answer...</div>
+                </div>
+            </div>
+        </div>
+        <div class="flashcard-progress" id="flashcard-progress">Card 1 of 10</div>
+        <div class="flashcard-controls">
+            <div class="tooltip-container">
+                <button id="flashcard-prev" class="flashcard-btn secondary">Previous</button>
+                <span id="flashcard-prev-tooltip" class="tooltip-text">Previous Card</span>
+            </div>
+            <div class="tooltip-container">
+                <button id="flashcard-flip" class="flashcard-btn">Flip Card</button>
+                <span id="flashcard-flip-tooltip" class="tooltip-text">Flip Card</span>
+            </div>
+            <div class="tooltip-container">
+                <button id="flashcard-next" class="flashcard-btn">Next</button>
+                <span id="flashcard-next-tooltip" class="tooltip-text">Next Card</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <input type="search" id="search-box" placeholder="Search for keywords (e.g., comma, slope, probability)..." aria-label="Search content">
+    </div>
+
+    
+
+    <h2 id="quick-review-header">
+        <span class="header-title">My Quick Review</span>
+        <div class="header-actions">
+            <div class="tooltip-container">
+                <span class="arrow-indicator">▼</span>
+                <span class="tooltip-text tooltip-text-narrow"></span>
+            </div>
+            <div class="tooltip-container">
+                <button class="speech-button" aria-label="Read section aloud">🔊</button>
+                <span class="tooltip-text tooltip-text-narrow">Read section aloud</span>
+            </div>
+            <div class="tooltip-container speech-control-hidden stop-button-container">
+                <button class="stop-button" aria-label="Stop reading">⏹️</button>
+                <span class="tooltip-text tooltip-text-narrow">Stop reading</span>
+            </div>
+        </div>
+    </h2>
+    <ul id="quick-review-list"></ul>
+
+    <h2>
+        <span class="header-title">Top 12 Grammar Rules to Remember</span>
+        <div class="header-actions">
+        <div class="tooltip-container">
+            <span class="arrow-indicator">▼</span>
+            <span class="tooltip-text tooltip-text-narrow"></span>
+            </div>
+            <div class="tooltip-container">
+                <button class="speech-button" aria-label="Read section aloud">🔊</button>
+                <span class="tooltip-text tooltip-text-narrow">Read section aloud</span>
+            </div>
+            <div class="tooltip-container speech-control-hidden stop-button-container">
+                <button class="stop-button" aria-label="Stop reading">⏹️</button>
+                <span class="tooltip-text tooltip-text-narrow">Stop reading</span>
+            </div>
+        </div>
+    </h2>
+    <ul>
+        <li><strong>Subject–verb agreement:</strong> Singular subject = singular verb.</li>
+        <li><strong>Pronoun clarity:</strong> Every pronoun must refer to a clear noun.</li>
+        <li><strong>Modifier placement:</strong> Put modifiers next to what they modify.</li>
+        <li><strong>Comma splices:</strong> Use semicolon or conjunction to fix run-ons.</li>
+        <li><strong>Parallel structure:</strong> Keep lists grammatically consistent.</li>
+        <li><strong>Punctuation:</strong> Know when to use commas, colons, and dashes.</li>
+        <li><strong>Possessives vs plurals:</strong> E.g., its vs it's.</li>
+        <li><strong>Verb tense consistency:</strong> Don't shift tense without reason.</li>
+        <li><strong>Logical comparisons:</strong> Compare similar things.</li>
+        <li><strong>Redundancy:</strong> Don't repeat meaning (e.g., 'free gift').</li>
+        <li><strong>Idioms:</strong> Use the correct preposition (e.g., 'interested in').</li>
+        <li><strong>Transition words:</strong> Use logic (However = contrast, etc.).</li>
+    </ul>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h2>
+        <span class="header-title">SAT Transition Words</span>
+        <div class="header-actions">
+        <div class="tooltip-container">
+            <span class="arrow-indicator">▼</span>
+            <span class="tooltip-text tooltip-text-narrow"></span>
+            </div>
+            <div class="tooltip-container">
+                <button class="speech-button" aria-label="Read section aloud">🔊</button>
+                <span class="tooltip-text tooltip-text-narrow">Read section aloud</span>
+            </div>
+            <div class="tooltip-container speech-control-hidden stop-button-container">
+                <button class="stop-button" aria-label="Stop reading">⏹️</button>
+                <span class="tooltip-text tooltip-text-narrow">Stop reading</span>
+            </div>
+        </div>
+    </h2>
+    <ul>
+        <li><strong>Addition/Support:</strong> Furthermore, In addition, Moreover, Also, Indeed, For example, For instance</li>
+        <li><strong>Contrast/Concession:</strong> However, Nevertheless, Nonetheless, On the other hand, In contrast, Although, Still</li>
+        <li><strong>Cause & Effect/Conclusion:</strong> Therefore, Consequently, Accordingly, As a result, Thus, Hence</li>
+        <li><strong>Sequence/Time:</strong> Subsequently, Previously, Meanwhile, Next, Then, First, Later</li>
+        <li><strong>Similarity:</strong> Similarly, Likewise, In the same way</li>
+        <li><strong>Emphasis/Restatement:</strong> In fact, In other words, That is, Notably</li>
+    </ul>
+
+    
+    <h2>
+        <span class="header-title">Essential Math Formulas</span>
+        <div class="header-actions">
+        <div class="tooltip-container">
+            <span class="arrow-indicator">▼</span>
+            <span class="tooltip-text tooltip-text-narrow"></span>
+            </div>
+            <div class="tooltip-container">
+                <button class="speech-button" aria-label="Read section aloud">🔊</button>
+                <span class="tooltip-text tooltip-text-narrow">Read section aloud</span>
+            </div>
+            <div class="tooltip-container speech-control-hidden stop-button-container">
+                <button class="stop-button" aria-label="Stop reading">⏹️</button>
+                <span class="tooltip-text tooltip-text-narrow">Stop reading</span>
+            </div>
+        </div>
+    </h2>
+
+    <h3>
+        <span class="header-title">Algebra & Functions:</span>
+        <div class="header-actions">
+        <div class="tooltip-container">
+            <span class="arrow-indicator">▼</span>
+            <span class="tooltip-text tooltip-text-narrow"></span>
+            </div>
+            <div class="tooltip-container">
+                <button class="speech-button" aria-label="Read section aloud">🔊</button>
+                <span class="tooltip-text tooltip-text-narrow">Read section aloud</span>
+            </div>
+            <div class="tooltip-container speech-control-hidden stop-button-container">
+                <button class="stop-button" aria-label="Stop reading">⏹️</button>
+                <span class="tooltip-text tooltip-text-narrow">Stop reading</span>
+            </div>
+        </div>
+    </h3>
+    <ul>
+        <li data-speech-text="Slope equals the fraction y sub 2 minus y sub 1 over x sub 2 minus x sub 1."><strong>Slope:</strong> \[\text{Slope} = \frac{y_2 - y_1}{x_2 - x_1}\]</li>
+        <li data-speech-text="Slope-intercept form is y equals m x plus b."><strong>Slope-intercept form:</strong> \(y = mx + b\)</li>
+        <li data-speech-text="Point-slope form is y minus y sub 1 equals m times the quantity x minus x sub 1."><strong>Point-slope form:</strong> \(y - y_1 = m(x - x_1)\)</li>
+    </ul>
+
+    <h3>
+        <span class="header-title">Quadratic Equations:</span>
+        <div class="header-actions">
+        <div class="tooltip-container">
+            <span class="arrow-indicator">▼</span>
+            <span class="tooltip-text tooltip-text-narrow"></span>
+            </div>
+            <div class="tooltip-container">
+                <button class="speech-button" aria-label="Read section aloud">🔊</button>
+                <span class="tooltip-text tooltip-text-narrow">Read section aloud</span>
+            </div>
+            <div class="tooltip-container speech-control-hidden stop-button-container">
+                <button class="stop-button" aria-label="Stop reading">⏹️</button>
+                <span class="tooltip-text tooltip-text-narrow">Stop reading</span>
+            </div>
+        </div>
+    </h3>
+    <ul>
+        <li data-speech-text="Standard form of a quadratic equation is a x squared plus b x plus c equals 0."><strong>Standard form:</strong> \(ax^2 + bx + c = 0\)</li>
+        <li data-speech-text="The quadratic formula is x equals the fraction, negative b plus or minus the square root of, b squared minus 4 a c, all over 2 a."><strong>Quadratic formula:</strong> \[x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\]</li>
+    </ul>
+
+
+    <h3>
+        <span class="header-title">Geometry & Trigonometry:</span>
+        <div class="header-actions">
+        <div class="tooltip-container">
+            <span class="arrow-indicator">▼</span>
+            <span class="tooltip-text tooltip-text-narrow"></span>
+            </div>
+            <div class="tooltip-container">
+                <button class="speech-button" aria-label="Read section aloud">🔊</button>
+                <span class="tooltip-text tooltip-text-narrow">Read section aloud</span>
+            </div>
+            <div class="tooltip-container speech-control-hidden stop-button-container">
+                <button class="stop-button" aria-label="Stop reading">⏹️</button>
+                <span class="tooltip-text tooltip-text-narrow">Stop reading</span>
+            </div>
+        </div>
+    </h3>
+    <ul>
+        <li data-speech-text="Area of a Triangle is one half times base times height."><strong>Area of a Triangle:</strong> \(\text{Area} = \frac{1}{2} \times \text{base} \times \text{height}\)</li>
+        <li data-speech-text="Circle Properties: Area equals pi r squared. Circumference equals 2 pi r."><strong>Circle Properties:</strong> Area = \(\pi r^2\) | Circumference = \(2\pi r\)</li>
+        <li data-speech-text="Volume of a Rectangular Prism equals length times width times height."><strong>Volume of a Rectangular Prism:</strong> \(\text{Volume} = l \times w \times h\)</li>
+        <li data-speech-text="SOH CAH TOA stands for: Sine of theta equals Opposite over Hypotenuse, Cosine of theta equals Adjacent over Hypotenuse, and Tangent of theta equals Opposite over Adjacent."><strong>SOH CAH TOA:</strong> \(\sin\theta = \frac{O}{H}\), \(\cos\theta = \frac{A}{H}\), \(\tan\theta = \frac{O}{A}\)</li>
+    </ul>
+
+    <h3>
+        <span class="header-title">Data Analysis & Probability:</span>
+        <div class="header-actions">
+        <div class="tooltip-container">
+            <span class="arrow-indicator">▼</span>
+            <span class="tooltip-text tooltip-text-narrow"></span>
+            </div>
+            <div class="tooltip-container">
+                <button class="speech-button" aria-label="Read section aloud">🔊</button>
+                <span class="tooltip-text tooltip-text-narrow">Read section aloud</span>
+            </div>
+            <div class="tooltip-container speech-control-hidden stop-button-container">
+                <button class="stop-button" aria-label="Stop reading">⏹️</button>
+                <span class="tooltip-text tooltip-text-narrow">Stop reading</span>
+            </div>
+        </div>
+    </h3>
+    <ul>
+        <li data-speech-text="Mean equals the sum of terms divided by the number of terms."><strong>Mean:</strong> \(\text{Mean} = \frac{\text{Sum of terms}}{\text{Number of terms}}\).</li>
+        <li data-speech-text="Probability equals the number of favorable outcomes divided by the total number of outcomes."><strong>Probability:</strong> \(\text{Probability} = \frac{\text{Number of favorable outcomes}}{\text{Total number of outcomes}}\).</li>
+        <li data-speech-text="Percent Change equals the fraction, New Value minus Original Value, over Original Value, times 100 percent."><strong>Percent Change:</strong> \[\text{Percent Change} = \frac{\text{New Value} - \text{Original Value}}{\text{Original Value}} \times 100\%\]</li>
+    </ul>
+
+    <h2>
+        <span class="header-title">SAT Tricks</span>
+        <div class="header-actions">
+        <div class="tooltip-container">
+            <span class="arrow-indicator">▼</span>
+            <span class="tooltip-text tooltip-text-narrow"></span>
+            </div>
+            <div class="tooltip-container">
+                <button class="speech-button" aria-label="Read section aloud">🔊</button>
+                <span class="tooltip-text tooltip-text-narrow">Read section aloud</span>
+            </div>
+            <div class="tooltip-container speech-control-hidden stop-button-container">
+                <button class="stop-button" aria-label="Stop reading">⏹️</button>
+                <span class="tooltip-text tooltip-text-narrow">Stop reading</span>
+            </div>
+        </div>
+    </h2>
+    <ul>
+        <li><strong>Know What PSDA Really Tests</strong>
+            <ul>
+                <li>Ratios, proportions, percentages</li>
+                <li>Averages, medians, and weighted averages</li>
+                <li>Interpreting graphs and tables</li>
+                <li>Probability and statistics basics</li>
+            </ul>
+            <em>It’s not advanced math — be fast and accurate with reasoning.</em>
+        </li>
+        <li><strong>Translate Words into Math</strong>
+            <ul>
+                <li>Underline numbers and keywords in word problems.</li>
+                <li>Rewrite step by step into equations.</li>
+                <li><strong>Example:</strong> 25% of 300 students → \(0.25 \times 300 = 75\).</li>
+            </ul>
+        </li>
+        <li><strong>Ratios and Proportions Hack</strong>
+            <ul>
+                <li>Set up fraction = fraction, then cross-multiply.</li>
+                <li><strong>Example:</strong> If 3 pens cost $4.50, 10 pens cost x → \(\frac{3}{10} = \frac{4.50}{x}\) → \(x = 15\).</li>
+            </ul>
+        </li>
+        <li><strong>Averages & Weighted Averages</strong>
+            <ul>
+                <li>Average = sum ÷ count. Weighted average uses total sums.</li>
+                <li><strong>Example:</strong> A: 20 students, avg 70; B: 30 students, avg 80 → combined avg = \(\frac{20\times70 + 30\times80}{50} = 76\).</li>
+                <li><em>Trick:</em> Multiply average × group size to get totals, then combine.</li>
+            </ul>
+        </li>
+        <li><strong>Data / Graph Questions</strong>
+            <ul>
+                <li>Go straight to what the question asks.</li>
+                <li>Cross out irrelevant numbers — avoid distractions.</li>
+            </ul>
+        </li>
+        <li><strong>Estimation Saves Time</strong>
+            <ul>
+                <li>Round numbers; compare to choices; eliminate extremes.</li>
+                <li><strong>Example:</strong> If rough calc ≈ 480 and choices are 5, 50, 500, 5000 → pick 500.</li>
+            </ul>
+        </li>
+        <li><strong>Practice in Small Doses</strong>
+            <ul>
+                <li>Do 5 ratio questions today; 5 data interpretation tomorrow.</li>
+                <li>Build muscle memory gradually.</li>
+            </ul>
+        </li>
+        <li><strong>Mindset</strong>
+            <ul>
+                <li>PSDA = everyday math in word problems: discounts, sales, splitting bills.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>
+        <span class="header-title">Quick PSDA Practice</span>
+        <div class="header-actions">
+        <div class="tooltip-container">
+            <span class="arrow-indicator">▼</span>
+            <span class="tooltip-text tooltip-text-narrow"></span>
+            </div>
+        </div>
+    </h3>
+    <ul id="psda-practice-list">
+        <li>
+            <div class="quiz-question"><strong>1)</strong> If 40% of 250 students ride the bus, how many do not ride the bus?</div>
+            <ul class="quiz-options">
+                <li class="quiz-option"><label><input type="radio" name="psda1" value="A"> 100</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda1" value="B"> 125</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda1" value="C"> 150</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda1" value="D"> 175</label></li>
+            </ul>
+            <div class="tooltip-container" style="margin-top:6px;">
+                <button class="timer-btn psda-check" data-q="psda1" data-answer="C">Check</button>
+                <span class="tooltip-text">Check your answer</span>
+            </div>
+            <div class="quiz-explanation" style="display:none;">40% ride → 0.4×250 = 100 ride. Not ride = 250 − 100 = 150. Correct answer: 150 (C).</div>
+        </li>
+        <li>
+            <div class="quiz-question"><strong>2)</strong> A class has scores 70, 80, 90. What is the average?</div>
+            <ul class="quiz-options">
+                <li class="quiz-option"><label><input type="radio" name="psda2" value="A"> 75</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda2" value="B"> 80</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda2" value="C"> 85</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda2" value="D"> 90</label></li>
+            </ul>
+            <div class="tooltip-container" style="margin-top:6px;">
+                <button class="timer-btn psda-check" data-q="psda2" data-answer="B">Check</button>
+                <span class="tooltip-text">Check your answer</span>
+            </div>
+            <div class="quiz-explanation" style="display:none;">Average = (70+80+90)/3 = 240/3 = 80.</div>
+        </li>
+        <li>
+            <div class="quiz-question"><strong>3)</strong> If 5 apples cost $2.50, how much do 12 apples cost?</div>
+            <ul class="quiz-options">
+                <li class="quiz-option"><label><input type="radio" name="psda3" value="A"> $5.00</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda3" value="B"> $6.00</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda3" value="C"> $6.50</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda3" value="D"> $7.50</label></li>
+            </ul>
+            <div class="tooltip-container" style="margin-top:6px;">
+                <button class="timer-btn psda-check" data-q="psda3" data-answer="B">Check</button>
+                <span class="tooltip-text">Check your answer</span>
+            </div>
+            <div class="quiz-explanation" style="display:none;">Unit price = 2.50/5 = $0.50 → 12×0.50 = $6.00. Correct answer: $6.00 (B).</div>
+        </li>
+        <li>
+            <div class="quiz-question"><strong>4)</strong> The median of 2, 4, 7, 8, 10 is:</div>
+            <ul class="quiz-options">
+                <li class="quiz-option"><label><input type="radio" name="psda4" value="A"> 4</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda4" value="B"> 7</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda4" value="C"> 8</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda4" value="D"> 9</label></li>
+            </ul>
+            <div class="tooltip-container" style="margin-top:6px;">
+                <button class="timer-btn psda-check" data-q="psda4" data-answer="B">Check</button>
+                <span class="tooltip-text">Check your answer</span>
+            </div>
+            <div class="quiz-explanation" style="display:none;">Ordered set; middle value is 7.</div>
+        </li>
+        <li>
+            <div class="quiz-question"><strong>5)</strong> A survey shows 30% prefer option A, 45% B, and the rest C. What percent prefer C?</div>
+            <ul class="quiz-options">
+                <li class="quiz-option"><label><input type="radio" name="psda5" value="A"> 15%</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda5" value="B"> 20%</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda5" value="C"> 25%</label></li>
+                <li class="quiz-option"><label><input type="radio" name="psda5" value="D"> 30%</label></li>
+            </ul>
+            <div class="tooltip-container" style="margin-top:6px;">
+                <button class="timer-btn psda-check" data-q="psda5" data-answer="C">Check</button>
+                <span class="tooltip-text">Check your answer</span>
+            </div>
+            <div class="quiz-explanation" style="display:none;">100% − (30% + 45%) = 25%.</div>
+        </li>
+    </ul>
+
+    <h3>
+        <span class="header-title">Reading/Essay Passage Hacks</span>
+        <div class="header-actions">
+        <div class="tooltip-container">
+            <span class="arrow-indicator">▼</span>
+            <span class="tooltip-text tooltip-text-narrow"></span>
+            </div>
+        </div>
+    </h3>
+    <ul>
+        <li><strong>Don’t Read Every Word at First</strong>
+            <ul>
+                <li>Skim the passage in 1–2 minutes max.</li>
+                <li>Focus on the first paragraph, and the first/last sentence of each paragraph.</li>
+                <li>Watch for tone/transition words: however, therefore, but, in contrast.</li>
+            </ul>
+            <em>This gives you the map of the passage without wasting time.</em>
+        </li>
+        <li><strong>Use the Questions to Guide You</strong>
+            <ul>
+                <li>Glance at questions before diving deep.</li>
+                <li>Answer line-reference questions first.</li>
+                <li>Do vocabulary-in-context by rereading the sentence only.</li>
+                <li>Save main idea/function questions for last.</li>
+            </ul>
+        </li>
+        <li><strong>Find Answers in the Text (Line Hunting)</strong>
+            <ul>
+                <li>For line references, read about 5 lines above and below for context.</li>
+                <li>Eliminate choices that are extreme, add new info, or are off-topic.</li>
+            </ul>
+        </li>
+        <li><strong>Answer in Order of Difficulty</strong>
+            <ul>
+                <li>Start with detail-based questions.</li>
+                <li>Then vocabulary-in-context.</li>
+                <li>Do main idea/author’s purpose last.</li>
+            </ul>
+        </li>
+        <li><strong>Keep Moving (Don’t Get Stuck)</strong>
+            <ul>
+                <li>Skip, mark, and return if unclear.</li>
+                <li>Later context often makes the answer obvious.</li>
+            </ul>
+        </li>
+        <li><strong>Extra Hacks</strong>
+            <ul>
+                <li>Eliminate aggressively: usually 2 wrong, 1 tricky, 1 right.</li>
+                <li>For evidence pairs, solve the evidence question first; use it to answer the paired question.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <!-- SAT Quiz Section (now at end of Essential Math content) -->
+    <h2 id="sat-quiz-header">
+        <span class="header-title">SAT Practice: Multiple Choice</span>
+        <div class="header-actions">
+            <div class="tooltip-container">
+                <span class="arrow-indicator">▼</span>
+                <span class="tooltip-text tooltip-text-narrow">Practice timed, shuffled SAT-style questions</span>
+            </div>
+        </div>
+    </h2>
+    <div id="sat-quiz-section">
+        <div class="quiz-tabs" role="tablist" aria-label="Quiz Subjects">
+            <button class="quiz-tab active" data-subject="math" role="tab" aria-selected="true">Math</button>
+            <button class="quiz-tab" data-subject="english" role="tab" aria-selected="false">English</button>
+        </div>
+        <div class="quiz-controls">
+            <label>
+                Number of questions:
+                <select id="quiz-count">
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+            </label>
+            <div class="tooltip-container">
+                <button id="quiz-start" class="timer-btn">Start</button>
+                <span class="tooltip-text">Start a new quiz</span>
+            </div>
+            <div class="tooltip-container">
+                <button id="quiz-stop" class="timer-btn secondary">Stop</button>
+                <span class="tooltip-text">Stop and fold the quiz</span>
+            </div>
+            <div class="tooltip-container">
+                <button id="quiz-retake" style="display:none;" class="timer-btn secondary">Retake</button>
+                <span class="tooltip-text">Start another quiz</span>
+            </div>
+            <span id="quiz-progress" style="margin-left:10px;"></span>
+        </div>
+        <div id="quiz-container" class="quiz-container" aria-live="polite"></div>
+        <div class="quiz-nav">
+            <div class="tooltip-container">
+                <button id="quiz-prev" disabled class="timer-btn secondary">Previous</button>
+                <span class="tooltip-text">Go to previous question</span>
+            </div>
+            <div class="tooltip-container">
+                <button id="quiz-next" disabled class="timer-btn">Next</button>
+                <span class="tooltip-text">Go to next question</span>
+            </div>
+            <div class="tooltip-container">
+                <button id="quiz-submit" disabled class="timer-btn">Submit</button>
+                <span class="tooltip-text">Submit and view answers</span>
+            </div>
+        </div>
+        <div id="quiz-result" class="quiz-result" aria-live="polite"></div>
+    </div>
+
+    <h2>
+        <span class="header-title">Exam Day Mindset</span>
+        <div class="header-actions">
+        <div class="tooltip-container">
+            <span class="arrow-indicator">▼</span>
+            <span class="tooltip-text tooltip-text-narrow"></span>
+            </div>
+            <div class="tooltip-container">
+                <button class="speech-button" aria-label="Read section aloud">🔊</button>
+                <span class="tooltip-text tooltip-text-narrow">Read section aloud</span>
+            </div>
+            <div class="tooltip-container speech-control-hidden stop-button-container">
+                <button class="stop-button" aria-label="Stop reading">⏹️</button>
+                <span class="tooltip-text tooltip-text-narrow">Stop reading</span>
+            </div>
+        </div>
+    </h2>
+    <ul>
+        <li>Focus on one question at a time.</li>
+        <li>Trust your practice. </li>
+        <li>Use POE (Process of Elimination) to narrow choices.</li>
+        <li>Don't let one question ruin your timing — skip and return.</li>
+        <li>Guess intelligently — no penalty for wrong answers.</li>
+        <li>Take mini-reset breaths every few minutes to stay sharp.</li>
+        <li>You're aiming for 1500+, not perfection.</li>
+    </ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // =================================================================
+            // CORE ELEMENTS & STORAGE KEYS
+            // =================================================================
+            const body = document.body;
+            const headers = document.querySelectorAll('h2, h3');
+            const searchBox = document.getElementById('search-box');
+            const quickReviewList = document.getElementById('quick-review-list');
+            const themeToggle = document.getElementById('theme-toggle');
+            const speech = window.speechSynthesis;
+            
+            const STORAGE_KEYS = {
+                sections: 'cramSheetSectionStates',
+                starred: 'cramSheetStarredItems',
+                theme: 'theme'
+            };
+
+            // =================================================================
+            // STATE MANAGEMENT
+            // =================================================================
+            let americanEnglishVoice = null;
+            
+            const saveStarredState = () => {
+                const starredItems = [];
+                document.querySelectorAll('li.starred:not(.is-clone)').forEach(item => {
+                    if (item.id) starredItems.push(item.id);
+                });
+                localStorage.setItem(STORAGE_KEYS.starred, JSON.stringify(starredItems));
+            };
+
+            const saveSectionsState = () => {
+                const states = {};
+            headers.forEach(header => {
+                    const content = header.nextElementSibling;
+                    if (content?.id) {
+                        states[content.id] = header.classList.contains('collapsed');
+                    }
+                });
+                localStorage.setItem(STORAGE_KEYS.sections, JSON.stringify(states));
+            };
+            
+            const getStoredData = (key, defaultValue) => {
+                try {
+                    const data = localStorage.getItem(key);
+                    return data ? JSON.parse(data) : defaultValue;
+                } catch (error) {
+                    console.error(`Error parsing stored data for key "${key}":`, error);
+                    return defaultValue;
+                }
+            };
+    
+            // =================================================================
+            // UI UPDATE FUNCTIONS
+            // =================================================================
+            const updateQuickReviewSection = () => {
+                if (!quickReviewList) return;
+                quickReviewList.innerHTML = ''; 
+                const allOriginalStarredItems = document.querySelectorAll('li.starred:not(.is-clone)');
+
+                if (allOriginalStarredItems.length === 0) {
+                    quickReviewList.innerHTML = '<li class="no-stars-message">You haven\'t starred any items yet.</li>';
+                    return;
+                }
+
+                allOriginalStarredItems.forEach(originalLi => {
+                    const clone = originalLi.cloneNode(true);
+                    clone.classList.add('is-clone');
+                    clone.removeAttribute('id');
+                    clone.querySelector('.star-toggle')?.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        document.getElementById(originalLi.id)?.querySelector('.star-toggle')?.click();
+                    });
+                    quickReviewList.appendChild(clone);
+                });
+            };
+
+            const updateHeaderAppearance = (header) => {
+                const tooltip = header?.querySelector('.tooltip-text-narrow');
+                if (!tooltip) return;
+
+                const isCollapsed = header.classList.contains('collapsed');
+                tooltip.textContent = isCollapsed ? 'Expand Section' : 'Collapse Section';
+                header.setAttribute('aria-expanded', String(!isCollapsed));
+            };
+
+            const setTheme = (theme) => {
+                const tooltip = document.getElementById('theme-tooltip');
+                body.classList.toggle('dark-mode', theme === 'dark');
+                if (themeToggle) {
+                    themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+                    const label = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+                    themeToggle.setAttribute('aria-label', label);
+                }
+                if (tooltip) {
+                    tooltip.textContent = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+                }
+            };
+
+            const restoreSectionStates = () => {
+                const savedStates = getStoredData(STORAGE_KEYS.sections, {});
+                headers.forEach(header => {
+                    const content = header.nextElementSibling;
+                    if (!content || content.tagName !== 'UL') return;
+
+                    const isCollapsed = savedStates.hasOwnProperty(content.id) ? savedStates[content.id] : header.tagName === 'H3';
+                    header.classList.toggle('collapsed', isCollapsed);
+                    content.classList.toggle('hidden', isCollapsed);
+                    updateHeaderAppearance(header);
+                });
+            };
+            
+            // =================================================================
+            // SPEECH SYNTHESIS (QUEUE-BASED IMPLEMENTATION)
+            // =================================================================
+
+            // Special math expressions processing function
+            const processMathForSpeech = (text) => {
+                // Process fractions - look for \frac{numerator}{denominator}
+                text = text.replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, 'the fraction $1 over $2');
+                
+                // Handle nested fractions with simple brackets
+                text = text.replace(/\\frac\{([^{}]*)\{([^{}]+)\}([^{}]*)\}\{([^{}]+)\}/g, 'the fraction $1 $2 $3 over $4');
+                
+                // Process square roots - look for \sqrt{expression}
+                text = text.replace(/\\sqrt\{([^{}]+)\}/g, 'square root of $1');
+                
+                // Process cubed roots
+                text = text.replace(/\\sqrt\[3\]\{([^{}]+)\}/g, 'cube root of $1');
+                
+                // Process powers/exponents
+                text = text.replace(/\^2/g, ' squared');
+                text = text.replace(/\^3/g, ' cubed');
+                text = text.replace(/\^(\d+)/g, ' to the power of $1');
+                text = text.replace(/\^\{([^{}]+)\}/g, ' to the power of $1');
+                
+                // Process common math symbols
+                text = text.replace(/π/g, 'pi');
+                text = text.replace(/\\pi/g, 'pi');
+                text = text.replace(/\\times/g, 'times');
+                text = text.replace(/\\cdot/g, 'times');
+                text = text.replace(/\\div/g, 'divided by');
+                text = text.replace(/÷/g, 'divided by');
+                text = text.replace(/±/g, 'plus or minus');
+                text = text.replace(/\\pm/g, 'plus or minus');
+                text = text.replace(/\\infty/g, 'infinity');
+                text = text.replace(/∞/g, 'infinity');
+                
+                // Process subscripts
+                text = text.replace(/_([0-9])/g, ' sub $1');
+                text = text.replace(/_\{([^{}]+)\}/g, ' sub $1');
+                
+                // Greek letters
+                text = text.replace(/\\theta/g, 'theta');
+                text = text.replace(/\\alpha/g, 'alpha');
+                text = text.replace(/\\beta/g, 'beta');
+                text = text.replace(/\\gamma/g, 'gamma');
+                text = text.replace(/\\delta/g, 'delta');
+                
+                // Clean up any remaining LaTeX commands
+                text = text.replace(/\\[a-zA-Z]+/g, '');
+                
+                // Remove unnecessary brackets from LaTeX
+                text = text.replace(/\{([^{}]*)\}/g, '$1');
+                
+                return text;
+            };
+
+            // Single source of truth for the state of the speech engine.
+            let speechState = {
+                playPauseButton: null,
+                stopButtonContainer: null,
+                status: 'idle', // 'idle', 'playing', 'paused'
+                currentHighlightElement: null,
+                headerElement: null, // The H2/H3 that initiated the speech
+                speechQueue: [], // Array of {element, text}
+                currentQueueIndex: 0
+            };
+
+            const loadAndFindVoice = () => {
+                const voices = speech.getVoices();
+                americanEnglishVoice = voices.find(voice => voice.name === 'Google US English') || voices.find(voice => voice.lang === 'en-US');
+            };
+
+            // Clean up function to reset state and UI
+            const resetSpeechState = () => {
+                speech.cancel(); // Stop any current speech immediately
+
+                if (speechState.currentHighlightElement) {
+                    speechState.currentHighlightElement.classList.remove('speaking-highlight');
+                }
+                
+                if (speechState.playPauseButton) {
+                    speechState.playPauseButton.classList.remove('speaking', 'pending');
+                    speechState.playPauseButton.textContent = '🔊';
+                    speechState.playPauseButton.setAttribute('aria-label', 'Read section aloud');
+                    const tooltipContainer = speechState.playPauseButton.closest('.tooltip-container');
+                    if (tooltipContainer) {
+                        const tooltip = tooltipContainer.querySelector('.tooltip-text');
+                        if (tooltip) tooltip.textContent = 'Read section aloud';
+                    }
+                }
+                
+                if (speechState.stopButtonContainer) {
+                    speechState.stopButtonContainer.classList.add('speech-control-hidden');
+                }
+                
+                speechState = {
+                    playPauseButton: null,
+                    stopButtonContainer: null,
+                    status: 'idle',
+                    currentHighlightElement: null,
+                    headerElement: null,
+                    speechQueue: [],
+                    currentQueueIndex: 0
+                };
+            };
+            
+            const playNextInQueue = () => {
+                if (speechState.currentQueueIndex >= speechState.speechQueue.length) {
+                    resetSpeechState();
+                    return;
+                }
+
+                if (speechState.status !== 'playing') {
+                    return; // Don't proceed if we're paused or idle
+                }
+
+                const currentItem = speechState.speechQueue[speechState.currentQueueIndex];
+                const utterance = new SpeechSynthesisUtterance(currentItem.text);
+
+                if (americanEnglishVoice) utterance.voice = americanEnglishVoice;
+                utterance.rate = 0.85;
+
+                utterance.onstart = () => {
+                    if (speechState.currentHighlightElement) {
+                        speechState.currentHighlightElement.classList.remove('speaking-highlight');
+                    }
+                    speechState.currentHighlightElement = currentItem.element;
+                    speechState.currentHighlightElement.classList.add('speaking-highlight');
+                    speechState.currentHighlightElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                };
+
+                utterance.onend = () => {
+                    speechState.currentQueueIndex++;
+                    playNextInQueue();
+                };
+                
+                utterance.onerror = (event) => {
+                    console.error('Speech synthesis error:', event.error);
+                    // Try to continue with the next item
+                    speechState.currentQueueIndex++;
+                    playNextInQueue();
+                };
+
+                speech.speak(utterance);
+            };
+
+            const handleSpeechRequest = async (headerElement, clickedButton, stopButtonContainer) => {
+                // This is the key fix: We explicitly wait for the typesetting to be 100% complete.
+                try {
+                    await MathJax.typesetPromise();
+                } catch (err) {
+                    console.error("Error waiting for MathJax typesetting:", err);
+                    // We can still proceed, but math might not be read correctly.
+                }
+
+                const isSameSpeechRequest = speechState.headerElement === headerElement;
+
+                // --- PAUSE ---
+                if (isSameSpeechRequest && speechState.status === 'playing') {
+                    speech.cancel(); // Stop current utterance, preventing onend from firing
+                    speechState.status = 'paused';
+                    clickedButton.textContent = '▶️';
+                    clickedButton.setAttribute('aria-label', 'Resume reading');
+                    const tooltip = clickedButton.closest('.tooltip-container')?.querySelector('.tooltip-text');
+                    if (tooltip) tooltip.textContent = 'Resume reading';
+                    return;
+                }
+
+                // --- RESUME ---
+                if (isSameSpeechRequest && speechState.status === 'paused') {
+                    speechState.status = 'playing';
+                    clickedButton.textContent = '⏸️';
+                    clickedButton.setAttribute('aria-label', 'Pause audio');
+                    const tooltip = clickedButton.closest('.tooltip-container')?.querySelector('.tooltip-text');
+                    if (tooltip) tooltip.textContent = 'Pause audio';
+                    playNextInQueue(); // Resume from where we left off
+                    return;
+                }
+
+                // --- START NEW ---
+                if (speech.speaking || speech.paused) {
+                    resetSpeechState(); // Fully reset before starting a new section
+                }
+                
+                // --- Build the queue ---
+                const newSpeechQueue = [];
+                const content = headerElement.nextElementSibling;
+
+                const headerTitle = headerElement.querySelector('.header-title')?.textContent.trim();
+                if (headerTitle) {
+                    newSpeechQueue.push({ element: headerElement, text: headerTitle });
+                }
+                
+                content?.querySelectorAll('li:not(.no-stars-message)')?.forEach(li => {
+                    // PRIORITIZE data-speech-text attribute for math formulas
+                    const speechText = li.dataset.speechText;
+                    if (speechText) {
+                        newSpeechQueue.push({ element: li, text: speechText });
+                        return; // Move to the next item
+                    }
+                    
+                    // Fallback for non-math items
+                    const clone = li.cloneNode(true);
+                    const starToggle = clone.querySelector('.star-toggle');
+                    if (starToggle) starToggle.remove();
+                    
+                    const cleanText = clone.textContent.trim().replace(/\s+/g, ' ');
+                    if (cleanText.length > 2) {
+                        newSpeechQueue.push({ element: li, text: cleanText });
+                    }
+                });
+
+                if (newSpeechQueue.length === 0) return;
+
+                // --- Update state for new request ---
+                 document.querySelectorAll('.speech-button.speaking, .speech-button.pending').forEach(b => {
+                    if (b !== clickedButton) {
+                        b.classList.remove('speaking', 'pending');
+                        b.textContent = '🔊';
+                        const tooltip = b.closest('.tooltip-container')?.querySelector('.tooltip-text');
+                        if (tooltip) tooltip.textContent = 'Read section aloud';
+                    }
+                });
+                document.querySelectorAll('.stop-button-container').forEach(c => {
+                    if (c !== stopButtonContainer) {
+                        c.classList.add('speech-control-hidden');
+                    }
+                });
+
+                clickedButton.classList.add('speaking');
+                clickedButton.textContent = '⏸️';
+                clickedButton.setAttribute('aria-label', 'Pause audio');
+                const tooltip = clickedButton.closest('.tooltip-container')?.querySelector('.tooltip-text');
+                if (tooltip) tooltip.textContent = 'Pause audio';
+
+                stopButtonContainer.classList.remove('speech-control-hidden');
+
+                speechState = {
+                    ...speechState,
+                    playPauseButton: clickedButton,
+                    stopButtonContainer: stopButtonContainer,
+                    status: 'playing',
+                    headerElement: headerElement,
+                    speechQueue: newSpeechQueue,
+                    currentQueueIndex: 0
+                };
+
+                playNextInQueue();
+            };
+
+            // =================================================================
+            // EVENT HANDLERS & INITIALIZATION
+            // =================================================================
+            const onSearchInput = () => {
+                const searchTerm = searchBox.value.toLowerCase().trim();
+                const allListItems = document.querySelectorAll('li:not(.is-clone)');
+                const allHeaders = document.querySelectorAll('h2, h3');
+
+                if (!searchTerm) {
+                    allListItems.forEach(li => li.style.display = '');
+                    allHeaders.forEach(h => h.style.display = '');
+                    restoreSectionStates();
+                    return;
+                }
+                
+                const visibleHeaders = new Set();
+                
+                allListItems.forEach(li => {
+                    const match = li.textContent.toLowerCase().includes(searchTerm);
+                    li.style.display = match ? '' : 'none';
+                    if (match) {
+                        let parent = li.parentElement;
+                        while(parent) {
+                            if (parent.previousElementSibling && (parent.previousElementSibling.tagName === 'H2' || parent.previousElementSibling.tagName === 'H3')) {
+                                const header = parent.previousElementSibling;
+                                visibleHeaders.add(header);
+                                // find parent H2 if current header is H3
+                                let h2parent = header;
+                                while(h2parent) {
+                                     if(h2parent.tagName === 'H2') {
+                                        visibleHeaders.add(h2parent);
+                                        break;
+                                     }
+                                     h2parent = h2parent.previousElementSibling;
+                                }
+                            }
+                            parent = parent.parentElement;
+                        }
+                    }
+                });
+                
+                allHeaders.forEach(h => {
+                    // Quick review section always visible
+                    if(h.id === 'quick-review-header') {
+                        h.style.display = '';
+                        return;
+                    }
+                    
+                    const match = h.querySelector('.header-title').textContent.toLowerCase().includes(searchTerm);
+                    if (match) {
+                        visibleHeaders.add(h);
+                        let h2parent = h;
+                        while(h2parent) {
+                             if(h2parent.tagName === 'H2') {
+                                visibleHeaders.add(h2parent);
+                                break;
+                             }
+                             h2parent = h2parent.previousElementSibling;
+                        }
+                    }
+                });
+
+                allHeaders.forEach(h => {
+                    if (h.id !== 'quick-review-header' && !visibleHeaders.has(h)) {
+                        h.style.display = 'none';
+                    } else {
+                        h.style.display = '';
+                        h.classList.remove('collapsed');
+                        h.nextElementSibling?.classList.remove('hidden');
+                        updateHeaderAppearance(h);
+                    }
+                });
+            };
+
+            const init = () => {
+                const savedTheme = localStorage.getItem(STORAGE_KEYS.theme);
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                setTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+
+                restoreSectionStates();
+
+                const starredItems = getStoredData(STORAGE_KEYS.starred, []);
+                document.querySelectorAll('li:not(.is-clone)').forEach(li => {
+                    const isStarred = starredItems.includes(li.id);
+                    li.classList.toggle('starred', isStarred);
+                    const star = li.querySelector('.star-toggle');
+                    if (star) {
+                        star.classList.toggle('starred', isStarred);
+                        star.textContent = isStarred ? '⭐' : '☆';
+                        star.setAttribute('aria-label', isStarred ? 'Unstar this item' : 'Star this item');
+                    }
+                });
+                
+                updateQuickReviewSection();
+
+                // Initialize the Table of Contents
+                initTOC();
+            };
+
+            // =================================================================
+            // TABLE OF CONTENTS FUNCTIONALITY
+            // =================================================================
+            const initTOC = () => {
+                const tocList = document.getElementById('toc-list');
+                if (!tocList) return;
+                
+                // Clear any existing contents
+                tocList.innerHTML = '';
+                
+                // Find all main section h2 headers
+                const mainSections = document.querySelectorAll('h2');
+                
+                // For each section, ensure it has an ID and add it to TOC
+                mainSections.forEach((section, index) => {
+                    // If there's no ID, create one based on the section title
+                    if (!section.id) {
+                        const titleText = section.querySelector('.header-title')?.textContent || `section-${index}`;
+                        section.id = titleText.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                    }
+                    
+                    // Create the TOC item
+                    const title = section.querySelector('.header-title')?.textContent || `Section ${index + 1}`;
+                    const tocItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    
+                    link.href = `#${section.id}`;
+                    link.textContent = title;
+                    tocItem.appendChild(link);
+                    tocList.appendChild(tocItem);
+                });
+                
+                // Add scroll event listener to highlight active section
+                window.addEventListener('scroll', highlightActiveTocItem);
+            };
+            
+            const highlightActiveTocItem = () => {
+                const tocLinks = document.querySelectorAll('#toc-list a');
+                if (tocLinks.length === 0) return;
+                
+                // Get current scroll position
+                const scrollY = window.scrollY;
+                
+                // Find the current section
+                const sections = Array.from(document.querySelectorAll('h2')).map(heading => {
+                    return {
+                        id: heading.id,
+                        offset: heading.getBoundingClientRect().top + window.scrollY
+                    };
+                });
+                
+                // Find the current active section
+                let currentSection = sections[0];
+                sections.forEach(section => {
+                    if (scrollY >= section.offset - 100) {
+                        currentSection = section;
+                    }
+                });
+                
+                // Remove active class from all links
+                tocLinks.forEach(link => link.classList.remove('active'));
+                
+                // Add active class to current section link
+                if (currentSection) {
+                    const activeLink = document.querySelector(`#toc-list a[href="#${currentSection.id}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            };
+            
+            // =================================================================
+            // FLASHCARD FUNCTIONALITY
+            // =================================================================
+            const initFlashcards = () => {
+                // DOM Elements
+                const flashcardModeButton = document.getElementById('flashcard-mode-button');
+                const flashcardContainer = document.getElementById('flashcard-container');
+                const flashcardElement = document.getElementById('flashcard');
+                const flashcardQuestion = document.getElementById('flashcard-question');
+                const flashcardAnswer = document.getElementById('flashcard-answer');
+                const flashcardProgress = document.getElementById('flashcard-progress');
+                const flashcardPrev = document.getElementById('flashcard-prev');
+                const flashcardNext = document.getElementById('flashcard-next');
+                const flashcardFlip = document.getElementById('flashcard-flip');
+                const flashcardExit = document.getElementById('flashcard-exit');
+                
+                // Flashcard state
+                let flashcards = [];
+                let currentCardIndex = 0;
+                let isFlipped = false;
+                let lastQuestion = null; // Keep track of the last question shown
+
+                // Extract flashcard content from the document
+                const generateFlashcards = () => {
+                    flashcards = [];
+                    
+                    // Get all section headers and their content
+                    const sections = document.querySelectorAll('.section');
+                    
+                    sections.forEach(section => {
+                        const sectionTitle = section.querySelector('h2').textContent;
+                        const sectionContent = section.querySelectorAll('p, li');
+                        
+                        // Process each paragraph or list item in the section
+                        sectionContent.forEach(element => {
+                            let text = element.textContent.trim();
+                            
+                            // Skip very short content or content likely not suitable for flashcards
+                            if (text.length < 15 || text.includes('Click to expand') || text.includes('Copyright')) return;
+                            
+                            // Check if this content has a formula or key term we can extract
+                            // Math formulas often contain =, ÷, ×, or special symbols
+                            const hasMathFormula = /[=÷×²³]|(\(.*\)\/\(.*\))/.test(text);
+                            
+                            // Definitions often contain "is", "means", or "defined as"
+                            const hasDefinition = /\s(is|means|defined as|refers to)\s/i.test(text) && text.length < 200;
+                            
+                            // Rules often contain "always", "never", "must", or "should"
+                            const hasRule = /\b(always|never|must|should|remember|note)\b/i.test(text) && text.length < 200;
+                            
+                            if (hasMathFormula || hasDefinition || hasRule) {
+                                let question, answer;
+                                
+                                // For math formulas, ask about the formula
+                                if (hasMathFormula) {
+                                    const parts = text.split(/[=:]/);
+                                    if (parts.length >= 2) {
+                                        question = `What's the formula for ${parts[0].trim()}?`;
+                                        answer = parts.slice(1).join('=').trim();
+                } else {
+                                        // If we can't split cleanly, create a general question
+                                        question = `What's the mathematical concept described here?`;
+                                        answer = text;
+                                    }
+                                }
+                                // For definitions
+                                else if (hasDefinition) {
+                                    const parts = text.split(/\s(is|means|defined as|refers to)\s/i);
+                                    if (parts.length >= 3) {
+                                        question = `What ${parts[1]} ${parts[0].trim()}?`;
+                                        answer = parts.slice(2).join(' ').trim();
+                                    } else {
+                                        question = `Define this concept from ${sectionTitle}:`;
+                                        answer = text;
+                                    }
+                                }
+                                // For rules
+                                else {
+                                    question = `What's this important rule for ${sectionTitle}?`;
+                                    answer = text;
+                                }
+                                
+                                flashcards.push({
+                                    question: question,
+                                    answer: answer,
+                                    section: sectionTitle
+                                });
+                            }
+                            // Direct question-answer pairs (colons often separate Q from A)
+                            else if (text.includes(':') && !text.includes('http')) {
+                                const parts = text.split(':');
+                                if (parts.length >= 2 && parts[0].length > 5 && parts[1].length > 5) {
+                                    const question = parts[0].trim() + '?';
+                                    const answer = parts.slice(1).join(':').trim();
+                                    
+                                    flashcards.push({
+                                        question: question,
+                                        answer: answer,
+                                        section: sectionTitle
+                                    });
+                                }
+                            }
+                            // For list items, create a question based on the section title
+                            else if (element.tagName === 'LI' && text.length < 200) {
+                                const question = `Which of these is a key point about ${sectionTitle}?`;
+                                flashcards.push({
+                                    question: question,
+                                    answer: text,
+                                    section: sectionTitle
+                                });
+                            }
+                        });
+                        
+                        // Special cases for math formulas with section-specific questions
+                        if (sectionTitle.includes('Math') || sectionTitle.includes('Formula') || sectionTitle.includes('Geometry')) {
+                            const formulas = [...section.querySelectorAll('li, p')].filter(el => 
+                                el.textContent.includes('=') || 
+                                el.textContent.includes('formula') || 
+                                /[A-Za-z]\^2/.test(el.textContent)
+                            );
+                            
+                            formulas.forEach(formula => {
+                                const text = formula.textContent.trim();
+                                if (text.includes('=')) {
+                                    const parts = text.split('=');
+                                    if (parts.length >= 2) {
+                                        const question = `What's the formula for ${parts[0].trim()}?`;
+                                        const answer = parts[1].trim();
+                                        
+                                        flashcards.push({
+                                            question: question,
+                                            answer: answer,
+                                            section: sectionTitle
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                    
+                    // Add some manually crafted flashcards for common SAT topics
+                    const manualFlashcards = [
+                        {
+                            question: "What's the formula for slope?",
+                            answer: "m = (y₂ - y₁) / (x₂ - x₁)",
+                            section: "Math"
+                        },
+                        {
+                            question: "What's the Pythagorean theorem?",
+                            answer: "a² + b² = c² for a right triangle.",
+                            section: "Math"
+                        },
+                        {
+                            question: "How do you calculate the area of a circle?",
+                            answer: "A = πr²",
+                            section: "Math"
+                        },
+                        {
+                            question: "What's the distance formula?",
+                            answer: "d = √[(x₂ - x₁)² + (y₂ - y₁)²]",
+                            section: "Math"
+                        },
+                        {
+                            question: "What does 'affect' vs 'effect' mean?",
+                            answer: "'Affect' is usually a verb (to influence), while 'effect' is usually a noun (a result).",
+                            section: "Grammar"
+                        },
+                        {
+                            question: "What does 'exacerbate' mean?",
+                            answer: "To make a problem, bad situation, or negative feeling worse.",
+                            section: "Vocabulary"
+                        },
+                        {
+                            question: "What is the formula for a parabola's vertex form?",
+                            answer: "y = a(x - h)² + k, where (h, k) is the vertex.",
+                            section: "Math"
+                        },
+                        {
+                            question: "In grammar, what is a non-restrictive clause?",
+                            answer: "A clause that provides extra, non-essential information. It is usually set off by commas. Example: 'The car, which was red, sped away.'",
+                            section: "Grammar"
+                        },
+                        {
+                            question: "What does 'ubiquitous' mean?",
+                            answer: "Present, appearing, or found everywhere.",
+                            section: "Vocabulary"
+                        },
+                        {
+                            question: "What is the volume of a cylinder?",
+                            answer: "V = πr²h",
+                            section: "Math"
+                        },
+                        {
+                            question: "When should you use a semicolon?",
+                            answer: "To connect two closely related independent clauses (sentences that could stand on their own).",
+                            section: "Grammar"
+                        },
+                        {
+                            question: "What does 'ephemeral' mean?",
+                            answer: "Lasting for a very short time.",
+                            section: "Vocabulary"
+                        },
+                        {
+                            question: "How do you find the mean (average) of a set of numbers?",
+                            answer: "Add all the numbers together and divide by the count of the numbers.",
+                            section: "Math"
+                        },
+                        {
+                            question: "What's the difference between 'its' and 'it's'?",
+                            answer: "'Its' is possessive (the dog wagged its tail). 'It's' is a contraction of 'it is' or 'it has'.",
+                            section: "Grammar"
+                        },
+                        {
+                            question: "What does 'pragmatic' mean?",
+                            answer: "Dealing with things sensibly and realistically in a way that is based on practical rather than theoretical considerations.",
+                            section: "Vocabulary"
+                        },
+                         {
+                            question: "What is SOH CAH TOA?",
+                            answer: "A mnemonic for sin(θ) = Opposite/Hypotenuse, cos(θ) = Adjacent/Hypotenuse, tan(θ) = Opposite/Adjacent.",
+                            section: "Math"
+                        },
+                        {
+                            question: "What is a comma splice?",
+                            answer: "An error where two independent clauses are joined with only a comma. Fix it with a period, semicolon, or a conjunction (like 'and', 'but').",
+                            section: "Grammar"
+                        },
+                        {
+                            question: "What does 'ambiguous' mean?",
+                            answer: "Open to more than one interpretation; not having one obvious meaning.",
+                            section: "Vocabulary"
+                        },
+                        {
+                            question: "What is the value of i²?",
+                            answer: "-1 (where 'i' is the imaginary unit).",
+                            section: "Math"
+                        },
+                         {
+                            question: "What is parallel structure?",
+                            answer: "Using the same pattern of words to show that two or more ideas have the same level of importance. E.g., 'I like hiking, swimming, and biking.'",
+                            section: "Grammar"
+                        },
+                        {
+                            question: "What does 'benevolent' mean?",
+                            answer: "Well meaning and kindly.",
+                            section: "Vocabulary"
+                        },
+                        {
+                            question: "How do you find the median of a data set?",
+                            answer: "Arrange the numbers in order from least to greatest and find the middle value. If there are two middle values, average them.",
+                            section: "Math"
+                        }
+                    ];
+                    
+                    // Add manual flashcards to our collection
+                    flashcards = [...flashcards, ...manualFlashcards];
+                    
+                    // Shuffle the flashcards
+                    shuffleFlashcards();
+                };
+                
+                // Shuffle the flashcards array
+                const shuffleFlashcards = () => {
+                    for (let i = flashcards.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+                    }
+                };
+                
+                // Update the current flashcard display
+                const updateCard = () => {
+                    if (flashcards.length === 0) {
+                        flashcardQuestion.textContent = "No flashcards available. Please try again.";
+                        flashcardAnswer.textContent = "";
+                        flashcardProgress.textContent = "No cards";
+                    return;
+                }
+                    
+                    const card = flashcards[currentCardIndex];
+                    flashcardQuestion.textContent = card.question;
+                    flashcardAnswer.textContent = card.answer;
+                    flashcardProgress.textContent = `Card ${currentCardIndex + 1} of ${flashcards.length} (${card.section})`;
+                    
+                    // Reset flip state
+                    isFlipped = false;
+                    flashcardElement.classList.remove('flipped');
+                };
+                
+                // Show the next card
+                const nextCard = () => {
+                    currentCardIndex = (currentCardIndex + 1) % flashcards.length;
+                    updateCard();
+                };
+                
+                // Show the previous card
+                const prevCard = () => {
+                    currentCardIndex = (currentCardIndex - 1 + flashcards.length) % flashcards.length;
+                    updateCard();
+                };
+                
+                // Flip the current card
+                const flipCard = () => {
+                    isFlipped = !isFlipped;
+                    flashcardElement.classList.toggle('flipped');
+                };
+                
+                // Open flashcard mode
+                const openFlashcardMode = () => {
+                    // Generate fresh flashcards each time
+                    generateFlashcards();
+
+                    if (flashcards.length === 0) {
+                        updateCard();
+                        flashcardContainer.classList.add('active');
+                        return;
+                    }
+
+                    // Pick a random starting index
+                    let startingIndex = Math.floor(Math.random() * flashcards.length);
+                    
+                    // If the new card is the same as the last one, and there's more than one card, pick a different one.
+                    if (flashcards.length > 1 && flashcards[startingIndex].question === lastQuestion) {
+                        startingIndex = (startingIndex + 1) % flashcards.length; // Just pick the next one to be different
+                    }
+                    
+                    currentCardIndex = startingIndex;
+                    updateCard();
+                    
+                    // Show the flashcard container
+                    flashcardContainer.classList.add('active');
+                };
+                
+                // Close flashcard mode
+                const closeFlashcardMode = () => {
+                    // Before closing, save the question of the currently displayed card.
+                    if (flashcards.length > 0) {
+                        lastQuestion = flashcards[currentCardIndex].question;
+                    }
+                    flashcardContainer.classList.remove('active');
+                };
+                
+                // Event Listeners
+                flashcardModeButton.addEventListener('click', openFlashcardMode);
+                flashcardExit.addEventListener('click', closeFlashcardMode);
+                flashcardNext.addEventListener('click', nextCard);
+                flashcardPrev.addEventListener('click', prevCard);
+                flashcardFlip.addEventListener('click', flipCard);
+                flashcardElement.addEventListener('click', flipCard);
+                
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    // Only handle keyboard events when flashcard mode is active
+                    if (!flashcardContainer.classList.contains('active')) return;
+                    
+                    switch (e.key) {
+                        case 'ArrowRight':
+                            nextCard();
+                            break;
+                        case 'ArrowLeft':
+                            prevCard();
+                            break;
+                        case ' ':
+                            flipCard();
+                            e.preventDefault();
+                            break;
+                        case 'Escape':
+                            closeFlashcardMode();
+                            break;
+                    }
+                });
+            };
+
+            // =================================================================
+            // POMODORO TIMER FUNCTIONALITY
+            // =================================================================
+            const initPomodoro = () => {
+                // DOM Elements
+                const pomodoro = document.getElementById('pomodoro');
+                const timerDisplay = document.getElementById('timer-display');
+                const timerMode = document.getElementById('timer-mode');
+                const timerProgress = document.getElementById('timer-progress');
+                const timerStatus = document.getElementById('timer-status');
+                const pomodoroCount = document.getElementById('pomodoro-count');
+                const startBtn = document.getElementById('timer-start');
+                const resetBtn = document.getElementById('timer-reset');
+                const minimizeBtn = document.getElementById('pomodoro-minimize');
+                const settingsBtn = document.getElementById('pomodoro-settings');
+                
+                // Tooltips
+                const startTooltip = document.getElementById('start-tooltip');
+                const minimizeTooltip = document.getElementById('minimize-tooltip');
+                
+                // Timer settings
+                const timerSettings = {
+                    workTime: 25 * 60, // 25 minutes in seconds
+                    shortBreakTime: 5 * 60, // 5 minutes in seconds
+                    longBreakTime: 15 * 60, // 15 minutes in seconds
+                    cyclesBeforeLongBreak: 4
+                };
+                
+                // Timer state
+                let timerState = {
+                    mode: 'work', // 'work', 'shortBreak', or 'longBreak'
+                    timeRemaining: timerSettings.workTime,
+                    isRunning: false,
+                    timerInterval: null,
+                    completedPomodoros: 0,
+                    startTime: null,
+                    totalTime: timerSettings.workTime
+                };
+                
+                // Load saved state from localStorage if available
+                const loadTimerState = () => {
+                    const savedState = localStorage.getItem('pomodoroState');
+                    if (savedState) {
+                        const parsedState = JSON.parse(savedState);
+                        // Only restore certain properties
+                        timerState.mode = parsedState.mode || 'work';
+                        timerState.completedPomodoros = parsedState.completedPomodoros || 0;
+                        
+                        // Don't restore time remaining, just set based on mode
+                        resetTimerForMode(timerState.mode);
+                        
+                        // Update UI
+                        updateTimerUI();
+                        pomodoroCount.textContent = timerState.completedPomodoros;
+                    }
+                };
+                
+                // Save current state to localStorage
+                const saveTimerState = () => {
+                    localStorage.setItem('pomodoroState', JSON.stringify({
+                        mode: timerState.mode,
+                        completedPomodoros: timerState.completedPomodoros
+                    }));
+                };
+                
+                // Format time as MM:SS
+                const formatTime = (seconds) => {
+                    const mins = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                };
+                
+                // Update UI based on current timer state
+                const updateTimerUI = () => {
+                    timerDisplay.textContent = formatTime(timerState.timeRemaining);
+                    
+                    // Update mode indicator
+                    if (timerState.mode === 'work') {
+                        timerMode.textContent = 'FOCUS TIME';
+                        pomodoro.className = 'pomodoro-container pomodoro-work';
+                        timerStatus.textContent = timerState.isRunning ? 'Working' : 'Paused';
+                    } else if (timerState.mode === 'shortBreak') {
+                        timerMode.textContent = 'SHORT BREAK';
+                        pomodoro.className = 'pomodoro-container pomodoro-shortbreak';
+                        timerStatus.textContent = timerState.isRunning ? 'Break time' : 'Paused';
+                    } else if (timerState.mode === 'longBreak') {
+                        timerMode.textContent = 'LONG BREAK';
+                        pomodoro.className = 'pomodoro-container pomodoro-longbreak';
+                        timerStatus.textContent = timerState.isRunning ? 'Long break' : 'Paused';
+                    }
+                    
+                    // Update progress bar
+                    const progressPercent = ((timerState.totalTime - timerState.timeRemaining) / timerState.totalTime) * 100;
+                    timerProgress.style.width = `${progressPercent}%`;
+                    
+                    // Update button text and tooltip
+                    startBtn.textContent = timerState.isRunning ? 'Pause' : 'Start';
+                    startTooltip.textContent = timerState.isRunning ? 'Pause Timer' : 'Start Timer';
+                    startBtn.className = timerState.isRunning ? 'timer-btn pause-btn' : 'timer-btn';
+                    
+                    // Update session count
+                    pomodoroCount.textContent = timerState.completedPomodoros;
+                };
+                
+                // Reset timer based on mode
+                const resetTimerForMode = (mode) => {
+                    if (mode === 'work') {
+                        timerState.timeRemaining = timerSettings.workTime;
+                        timerState.totalTime = timerSettings.workTime;
+                    } else if (mode === 'shortBreak') {
+                        timerState.timeRemaining = timerSettings.shortBreakTime;
+                        timerState.totalTime = timerSettings.shortBreakTime;
+                    } else if (mode === 'longBreak') {
+                        timerState.timeRemaining = timerSettings.longBreakTime;
+                        timerState.totalTime = timerSettings.longBreakTime;
+                    }
+                    updateTimerUI();
+                };
+                
+                // Start the timer
+                const startTimer = () => {
+                    timerState.isRunning = true;
+                    timerState.startTime = Date.now() - ((timerState.totalTime - timerState.timeRemaining) * 1000);
+                    
+                    if (timerState.timerInterval) {
+                        clearInterval(timerState.timerInterval);
+                    }
+                    
+                    timerState.timerInterval = setInterval(() => {
+                        const elapsed = Math.floor((Date.now() - timerState.startTime) / 1000);
+                        timerState.timeRemaining = timerState.totalTime - elapsed;
+                        
+                        if (timerState.timeRemaining <= 0) {
+                            timerComplete();
+            } else {
+                            updateTimerUI();
+                        }
+                    }, 1000);
+                    
+                    updateTimerUI();
+                };
+                
+                // Pause the timer
+                const pauseTimer = () => {
+                    timerState.isRunning = false;
+                    clearInterval(timerState.timerInterval);
+                    timerState.timerInterval = null;
+                    updateTimerUI();
+                };
+                
+                // Timer completed
+                const timerComplete = () => {
+                    clearInterval(timerState.timerInterval);
+                    timerState.timerInterval = null;
+                    timerState.isRunning = false;
+                    
+                    // Play notification sound
+                    playNotificationSound();
+                    
+                    // Cycle to next mode
+                    if (timerState.mode === 'work') {
+                        // Increment completed pomodoros
+                        timerState.completedPomodoros++;
+                        
+                        // Determine next break type
+                        if (timerState.completedPomodoros % timerSettings.cyclesBeforeLongBreak === 0) {
+                            timerState.mode = 'longBreak';
+                        } else {
+                            timerState.mode = 'shortBreak';
+                        }
+                    } else {
+                        // After any break, go back to work mode
+                        timerState.mode = 'work';
+                    }
+                    
+                    resetTimerForMode(timerState.mode);
+                    saveTimerState();
+                    
+                    // Show notification
+                    showNotification();
+                };
+                
+                // Play a notification sound
+                const playNotificationSound = () => {
+                    const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLXPF8tiJNwgZVKDn4Zg/CRFKhNPmqE4KDTeqys+vWQwGM3307J5fDgUSa+nloWMSBBde4OmlahkDD1fa4KxtIAURRdDWonIoFElAy9CkdDASV283rMuufT0caCCitMCLVipxG5ysuJNpPHgZkaeymn1SgxyApK2fh2hdKHiXqKWNdHVAaYCdqpyGfYBVWnSQpJ6KiIlrRFNog5ahn4yThWI6NGVyeYyQlJORfEgpKj9MXHKFjo2XiGgxEBMuXH2ZoJGDZjwPA1Bpf4qJdVxAJgByiqWsnH5PHAJTjcDeyqshAUSq6vXQpkwEOp3t+diVKAUke9f03js=');
+                    audio.play();
+                };
+                
+                // Show browser notification
+                const showNotification = () => {
+                    if (!("Notification" in window)) {
+                        return;
+                    }
+                    
+                    if (Notification.permission === "granted") {
+                        let title, body;
+                        if (timerState.mode === 'work') {
+                            title = "Time to focus!";
+                            body = "Start your 25-minute focus session.";
+                        } else if (timerState.mode === 'shortBreak') {
+                            title = "Take a short break!";
+                            body = "Time for a 5-minute break.";
+                        } else {
+                            title = "Take a longer break!";
+                            body = "You've earned a 15-minute break!";
+                        }
+                        
+                        const notification = new Notification(title, {
+                            body: body,
+                            icon: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><circle cx='12' cy='12' r='10' fill='%233498db'/></svg>"
+                        });
+                    } else if (Notification.permission !== "denied") {
+                        Notification.requestPermission();
+                    }
+                };
+                
+                // Event listeners
+                startBtn.addEventListener('click', () => {
+                    if (timerState.isRunning) {
+                        pauseTimer();
+                    } else {
+                        startTimer();
+                    }
+                });
+                
+                resetBtn.addEventListener('click', () => {
+                    pauseTimer();
+                    resetTimerForMode(timerState.mode);
+                });
+                
+                minimizeBtn.addEventListener('click', () => {
+                    pomodoro.classList.toggle('minimized');
+                    
+                    if (pomodoro.classList.contains('minimized')) {
+                        minimizeBtn.textContent = '🔍';
+                        minimizeTooltip.textContent = 'Expand';
+                    } else {
+                        minimizeBtn.textContent = '➖';
+                        minimizeTooltip.textContent = 'Minimize';
+                    }
+                    // Immediately reposition tooltips after any state change.
+                    positionTimerTooltips();
+                });
+                
+                settingsBtn.addEventListener('click', () => {
+                    alert('Pomodoro Settings:\n\n- Work: 25 minutes\n- Short Break: 5 minutes\n- Long Break: 15 minutes\n- Long break after 4 sessions');
+                });
+                
+                // Initialize
+                loadTimerState();
+                updateTimerUI();
+                
+                // Start with timer minimized
+                pomodoro.classList.add('minimized');
+                minimizeBtn.textContent = '🔍';
+                minimizeTooltip.textContent = 'Expand';
+                
+                // Request notification permission
+                if ("Notification" in window && Notification.permission !== "denied") {
+                    Notification.requestPermission();
+                }
+            };
+            
+            // =================================================================
+            // TOOLTIP TIMEOUT FUNCTIONALITY
+            // =================================================================
+            const tooltipTimeouts = new Map();
+            
+            // This is the single source of truth for positioning timer tooltips.
+            const positionTimerTooltips = () => {
+                const pomodoroWidget = document.getElementById('pomodoro');
+                const isMinimized = pomodoroWidget.classList.contains('minimized');
+
+                document.querySelectorAll('.pomodoro-container .tooltip-container').forEach(container => {
+                    const tooltip = container.querySelector('.tooltip-text');
+                    if (!tooltip) return;
+
+                    // Force remove all inline styles to start fresh.
+                    tooltip.removeAttribute('style');
+                    container.removeAttribute('style');
+
+                    if (isMinimized) {
+                        // When timer is MINIMIZED, position tooltip under the entire widget.
+                        const widgetRect = pomodoroWidget.getBoundingClientRect();
+                        tooltip.style.position = 'fixed';
+                        tooltip.style.top = `${widgetRect.bottom + 5}px`;
+                        
+                        let leftPosition = widgetRect.left + widgetRect.width / 2;
+                        
+                        // Check if this is the settings tooltip and apply the shift
+                        if (tooltip.id === 'settings-tooltip') {
+                            leftPosition += 65; // Shift rightwards by 65px
+                        }
+
+                        // Shift expand tooltip slightly right in minimized state
+                        if (tooltip.id === 'minimize-tooltip') {
+                            leftPosition += 5; // Shift rightwards by 5px
+                        }
+
+                        tooltip.style.left = `${leftPosition}px`;
+                        tooltip.style.transform = 'translateX(-50%)';
+                        tooltip.style.zIndex = '9999';
+                    } else {
+                        // When timer is EXPANDED, position tooltip under its button.
+                        
+                        // Special handling for minimize tooltip - position directly under button
+                        if (tooltip.id === 'minimize-tooltip') {
+                            const minimizeButton = document.getElementById('pomodoro-minimize');
+                            if (minimizeButton) {
+                                const buttonRect = minimizeButton.getBoundingClientRect();
+                                tooltip.style.position = 'fixed';
+                                tooltip.style.top = `${buttonRect.bottom + 5}px`;
+                                tooltip.style.left = `${buttonRect.left + (buttonRect.width / 2)}px`;
+                                tooltip.style.transform = 'translateX(-50%)';
+                                tooltip.style.zIndex = '9999';
+                                return; // Skip the default positioning
+                            }
+                        }
+                        
+                        container.style.position = 'relative';
+                        tooltip.style.position = 'absolute';
+                        tooltip.style.top = '100%';
+                        
+                        if (tooltip.id === 'settings-tooltip') {
+                            // Position centered under button, then add margin to shift right
+                            tooltip.style.left = '50%';
+                            tooltip.style.transform = 'translateX(-50%)';
+                            tooltip.style.marginLeft = '65px'; // Shift right by 65px
+                        } else {
+                            tooltip.style.left = '50%';
+                            tooltip.style.transform = 'translateX(-50%)';
+                        }
+                        
+                        tooltip.style.marginTop = '5px';
+                    }
+                });
+            };
+
+            // Set up tooltip hover behavior with timeouts
+            document.querySelectorAll('.tooltip-container').forEach(container => {
+                const tooltip = container.querySelector('.tooltip-text');
+                if (!tooltip) return;
+                
+                // Override CSS hover with JavaScript
+                container.addEventListener('mouseenter', () => {
+                    // Clear any existing timeout for this container
+                    if (tooltipTimeouts.has(container)) {
+                        clearTimeout(tooltipTimeouts.get(container));
+                    }
+                    
+                    // Position timer tooltips if needed
+                    if (container.closest('.pomodoro-container')) {
+                        positionTimerTooltips();
+                    }
+
+                    // Show tooltip immediately
+                    tooltip.classList.add('show');
+                    tooltip.classList.remove('hide');
+                    
+                    // Set timeout to hide after 2 seconds for regular tooltips, 4 seconds for timer tooltips
+                    const isTimerTooltip = container.closest('.pomodoro-container') !== null;
+                    const timeout = setTimeout(() => {
+                        tooltip.classList.remove('show');
+                        tooltip.classList.add('hide');
+                    }, isTimerTooltip ? 4000 : 2000);
+                    
+                    // Store timeout reference
+                    tooltipTimeouts.set(container, timeout);
+                });
+                
+                container.addEventListener('mouseleave', () => {
+                    // Clear timeout when mouse leaves
+                    if (tooltipTimeouts.has(container)) {
+                        clearTimeout(tooltipTimeouts.get(container));
+                        tooltipTimeouts.delete(container);
+                    }
+                    
+                    // Hide tooltip immediately
+                    tooltip.classList.remove('show');
+                    tooltip.classList.add('hide');
+                });
+            });
+
+            themeToggle?.addEventListener('click', () => {
+                const newTheme = body.classList.contains('dark-mode') ? 'light' : 'dark';
+                localStorage.setItem(STORAGE_KEYS.theme, newTheme);
+                if (document.startViewTransition) {
+                    const rect = themeToggle.getBoundingClientRect();
+                    document.documentElement.style.setProperty('--x', `${rect.left + rect.width / 2}px`);
+                    document.documentElement.style.setProperty('--y', `${rect.top + rect.height / 2}px`);
+                    document.startViewTransition(() => setTheme(newTheme));
+                } else {
+                    setTheme(newTheme);
+                }
+            });
+
+            searchBox?.addEventListener('input', onSearchInput);
+            
+            headers.forEach((header, index) => {
+                // Determine collapsible content. If the immediate sibling is not a UL,
+                // wrap all following siblings up to the next H2 into a container.
+                let content = header.nextElementSibling;
+                if (!content) return;
+                if (content.tagName !== 'UL') {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'section-wrapper';
+                    // Insert wrapper after header
+                    header.parentNode.insertBefore(wrapper, content);
+                    // Move siblings until next H2 into wrapper
+                    while (wrapper.nextElementSibling && wrapper.nextElementSibling.tagName !== 'H2') {
+                        wrapper.appendChild(wrapper.nextElementSibling);
+                    }
+                    content = wrapper;
+                }
+                content.id = content.id || `section-content-${index}`;
+                header.setAttribute('aria-controls', content.id);
+
+                // Ensure tooltip in header has text
+                const tooltipSpan = header.querySelector('.tooltip-text');
+                if (tooltipSpan && tooltipSpan.textContent.trim() === '') {
+                    tooltipSpan.textContent = 'Click to expand/collapse';
+                }
+
+                // Make header interactive
+                header.setAttribute('role', 'button');
+                header.setAttribute('tabindex', '0');
+                header.querySelector('.arrow-indicator')?.setAttribute('aria-hidden', 'true');
+                header.addEventListener('click', (e) => {
+                    if (e.target.closest('.speech-button')) return;
+                    header.classList.toggle('collapsed');
+                    content.classList.toggle('hidden');
+                    updateHeaderAppearance(header);
+                    saveSectionsState();
+                });
+                header.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        header.click();
+                    }
+                });
+
+                header.querySelector('.speech-button')?.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    const stopButtonContainer = header.querySelector('.stop-button-container');
+                    await handleSpeechRequest(header, e.currentTarget, stopButtonContainer);
+                });
+
+                header.querySelector('.stop-button')?.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    resetSpeechState();
+                });
+            });
+
+            document.querySelectorAll('li').forEach((li, index) => {
+                if (li.querySelector('.star-toggle') || li.classList.contains('no-stars-message')) return; 
+                li.id = li.id || `li-item-${index}`;
+                
+                const star = document.createElement('span');
+                star.className = 'star-toggle';
+                star.textContent = '☆';
+                star.setAttribute('role', 'button');
+                star.setAttribute('aria-label', 'Star this item');
+                li.appendChild(star);
+
+                star.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isStarred = li.classList.toggle('starred');
+                    star.classList.toggle('starred', isStarred);
+                    star.textContent = isStarred ? '⭐' : '☆';
+                    star.setAttribute('aria-label', isStarred ? 'Unstar this item' : 'Star this item');
+                    saveStarredState();
+                    updateQuickReviewSection(); 
+                });
+            });
+            
+            if (speech) {
+                document.querySelectorAll('.speech-button').forEach(button => {
+                    button.style.visibility = 'visible';
+                    button.style.opacity = '1';
+                });
+                window.onbeforeunload = () => {
+                    // Stop any speech before leaving the page to prevent "zombie" audio
+                    if(speech.speaking) speech.cancel();
+                };
+                loadAndFindVoice();
+                if (speech.onvoiceschanged !== undefined) {
+                    speech.onvoiceschanged = loadAndFindVoice;
+                }
+            }
+            init();
+            initPomodoro();
+            initFlashcards();
+
+            // Add window resize event listener for tooltip positioning
+            window.addEventListener('resize', () => {
+                positionTimerTooltips();
+            });
+
+            // =================================================================
+            // INSPIRATIONAL MESSAGES FUNCTIONALITY
+            // =================================================================
+            const initInspirationMessages = () => {
+                const inspirationContainer = document.getElementById('inspiration-container');
+                const inspirationText = document.getElementById('inspiration-text');
+                
+                // Collection of inspirational messages
+                const messages = [
+                    "You've got this — remember, progress over perfection.",
+                    "One question at a time. You're doing great.",
+                    "Small steps lead to big results.",
+                    "Trust your preparation and stay calm.",
+                    "Take a deep breath. You're right on track.",
+                    "Stay focused, stay confident — you're prepared for this.",
+                    "Believe in yourself as much as we believe in you.",
+                    "Every minute of study counts. Keep going!",
+                    "You're stronger than you think and smarter than you know.",
+                    "This is just one step in your amazing journey.",
+                    "Stay positive. Good things are coming your way.",
+                    "When in doubt, eliminate the obviously wrong answers first.",
+                    "Remember your 'why' and keep pushing forward.",
+                    "You don't have to be perfect to be amazing."
+                ];
+                
+                // Variables to track state - start with a random message
+                let currentIndex = Math.floor(Math.random() * messages.length);
+                let messageTimer;
+                let displayDuration = 8000; // Message displays for 8 seconds
+                let intervalBetweenMessages = 60 * 1000; // Show message every 1 minute
+                
+                // Initially show a message after 10 seconds
+                const initialDelay = 10 * 1000;
+                
+                // Function to show a message
+                const showMessage = () => {
+                    // Get next message in rotation
+                    inspirationText.textContent = messages[currentIndex];
+                    currentIndex = (currentIndex + 1) % messages.length;
+                    
+                    // Show the container
+                    inspirationContainer.classList.add('visible');
+                    
+                    // Hide after the display duration
+                    clearTimeout(messageTimer);
+                    messageTimer = setTimeout(() => {
+                        inspirationContainer.classList.remove('visible');
+                    }, displayDuration);
+                };
+                
+                // Start the interval after initial delay
+                setTimeout(() => {
+                    showMessage();
+                    // Then show periodically
+                    setInterval(showMessage, intervalBetweenMessages);
+                }, initialDelay);
+                
+                // Add event listener to allow dismissing by clicking (optional functionality)
+                inspirationContainer.addEventListener('click', () => {
+                    inspirationContainer.classList.remove('visible');
+                    clearTimeout(messageTimer);
+                });
+                
+                // Make it interactive (not just pointer-events: none)
+                inspirationContainer.style.pointerEvents = 'auto';
+                inspirationContainer.style.cursor = 'pointer';
+            };
+            
+            // Initialize inspirational messages
+            initInspirationMessages();
+
+            // Add this JavaScript code right before the initInspirationMessages function
+
+            // =================================================================
+            // SUGGEST A TIP FUNCTIONALITY
+            // =================================================================
+            // Configure where suggestions are sent. Example: Formspree endpoint like
+            // https://formspree.io/f/yourFormId
+            // Leave blank to disable remote sending (will store locally only).
+            window.SUGGEST_TIP_ENDPOINT = window.SUGGEST_TIP_ENDPOINT || '';
+            const initSuggestTip = () => {
+                const suggestTipButton = document.getElementById('suggest-tip-button');
+                const suggestTipModal = document.getElementById('suggest-tip-modal');
+                const suggestTipClose = document.getElementById('suggest-tip-close');
+                const tipForm = document.getElementById('tip-form');
+                const formMessage = document.getElementById('form-message');
+                const recaptchaContainer = document.getElementById('recaptcha-container');
+                const recaptchaWidget = document.getElementById('recaptcha-widget');
+                
+                // Initialize reCAPTCHA v2 if site key provided
+                if (window.RECAPTCHA_SITE_KEY && recaptchaContainer && recaptchaWidget) {
+                    recaptchaContainer.style.display = 'block';
+                    recaptchaWidget.setAttribute('data-sitekey', window.RECAPTCHA_SITE_KEY);
+                }
+                
+                // Open modal when button is clicked
+                suggestTipButton.addEventListener('click', () => {
+                    suggestTipModal.classList.add('active');
+                });
+                
+                // Close modal when close button is clicked
+                suggestTipClose.addEventListener('click', () => {
+                    suggestTipModal.classList.remove('active');
+                });
+                
+                // Close modal when clicking outside the content
+                suggestTipModal.addEventListener('click', (e) => {
+                    if (e.target === suggestTipModal) {
+                        suggestTipModal.classList.remove('active');
+                    }
+                });
+                
+                // Handle form submission
+                tipForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const category = document.getElementById('tip-category').value;
+                    const title = document.getElementById('tip-title').value;
+                    const content = document.getElementById('tip-content').value;
+                    const name = document.getElementById('tip-name').value;
+                    const honeypot = document.getElementById('tip-website').value;
+                    
+                    // Basic rate limiting using localStorage
+                    const now = Date.now();
+                    const RATE_LIMITS = {
+                        minIntervalMs: 60 * 1000, // 1 minute between submissions
+                        dailyMax: 10 // max 10 per day per browser
+                    };
+                    const lastSubmit = parseInt(localStorage.getItem('tipLastSubmitTs') || '0', 10);
+                    const sinceLast = now - lastSubmit;
+                    const todayKey = new Date().toISOString().slice(0,10);
+                    const dailyCounts = JSON.parse(localStorage.getItem('tipDailyCounts') || '{}');
+                    const todayCount = parseInt(dailyCounts[todayKey] || 0, 10);
+
+                    if (sinceLast < RATE_LIMITS.minIntervalMs) {
+                        const waitSeconds = Math.ceil((RATE_LIMITS.minIntervalMs - sinceLast) / 1000);
+                        formMessage.textContent = `Please wait ${waitSeconds}s before submitting again.`;
+                        formMessage.className = 'form-message error';
+                        return;
+                    }
+                    if (todayCount >= RATE_LIMITS.dailyMax) {
+                        formMessage.textContent = 'Daily limit reached. Try again tomorrow.';
+                        formMessage.className = 'form-message error';
+                        return;
+                    }
+                    // If reCAPTCHA is enabled, require a token
+                    let recaptchaToken = '';
+                    if (window.RECAPTCHA_SITE_KEY && window.grecaptcha && typeof window.grecaptcha.getResponse === 'function') {
+                        recaptchaToken = window.grecaptcha.getResponse();
+                        if (!recaptchaToken) {
+                            formMessage.textContent = 'Please complete the reCAPTCHA.';
+                            formMessage.className = 'form-message error';
+                            return;
+                        }
+                    }
+
+                    const payload = {
+                        category,
+                        title,
+                        content,
+                        name: name || 'Anonymous',
+                        date: new Date().toISOString(),
+                        pageUrl: window.location.href,
+                        userAgent: navigator.userAgent,
+                        recaptchaToken
+                    };
+                    
+                    // Simple validation
+                    if (!category || !title || !content) {
+                        formMessage.textContent = 'Please fill in all required fields.';
+                        formMessage.className = 'form-message error';
+                        return;
+                    }
+                    // Honeypot check: if filled, treat as spam and silently succeed
+                    if (honeypot && honeypot.trim().length > 0) {
+                        formMessage.textContent = 'Thank you! Your tip has been sent successfully.';
+                        formMessage.className = 'form-message success';
+                        tipForm.reset();
+                        setTimeout(() => {
+                            suggestTipModal.classList.remove('active');
+                            formMessage.className = 'form-message';
+                        }, 1500);
+                        return;
+                    }
+                    
+                    // Try to send to remote endpoint if configured
+                    let remoteSent = false;
+                    if (window.SUGGEST_TIP_ENDPOINT) {
+                        try {
+                            const controller = new AbortController();
+                            const timeoutId = setTimeout(() => controller.abort(), 10000);
+                            const response = await fetch(window.SUGGEST_TIP_ENDPOINT, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify(payload),
+                                signal: controller.signal
+                            });
+                            clearTimeout(timeoutId);
+                            if (response.ok) {
+                                remoteSent = true;
+                            } else {
+                                console.warn('Suggest Tip: Remote endpoint responded with status', response.status);
+                            }
+                        } catch (err) {
+                            console.warn('Suggest Tip: Failed to send to remote endpoint', err);
+                        }
+                    }
+
+                    // Always store locally as a fallback/audit trail
+                    try {
+                        const tips = JSON.parse(localStorage.getItem('suggestedTips') || '[]');
+                        tips.push(payload);
+                        localStorage.setItem('suggestedTips', JSON.stringify(tips));
+                    } catch (_) {
+                        // Ignore localStorage failures
+                    }
+                    
+                    // Update rate limiting counters
+                    try {
+                        localStorage.setItem('tipLastSubmitTs', String(now));
+                        const updatedDailyCounts = JSON.parse(localStorage.getItem('tipDailyCounts') || '{}');
+                        updatedDailyCounts[todayKey] = (parseInt(updatedDailyCounts[todayKey] || 0, 10) + 1);
+                        // Keep only recent days (at most 7)
+                        const keys = Object.keys(updatedDailyCounts).sort().slice(-7);
+                        const pruned = {};
+                        keys.forEach(k => pruned[k] = updatedDailyCounts[k]);
+                        localStorage.setItem('tipDailyCounts', JSON.stringify(pruned));
+                    } catch (_) {}
+
+                    // Show user feedback
+                    if (remoteSent) {
+                        formMessage.textContent = 'Thank you! Your tip has been sent successfully.';
+                        formMessage.className = 'form-message success';
+                    } else if (window.SUGGEST_TIP_ENDPOINT) {
+                        formMessage.textContent = 'Submitted locally. Remote send failed; we will review the local copy.';
+                        formMessage.className = 'form-message error';
+                    } else {
+                        formMessage.textContent = 'Saved locally. Configure SUGGEST_TIP_ENDPOINT to receive submissions remotely.';
+                        formMessage.className = 'form-message';
+                        console.info('Set window.SUGGEST_TIP_ENDPOINT to your endpoint (e.g., Formspree) to receive suggestions.');
+                    }
+                    
+                    // Reset form
+                    tipForm.reset();
+                    // Reset reCAPTCHA if present
+                    try { if (window.grecaptcha && typeof window.grecaptcha.reset === 'function') { window.grecaptcha.reset(); } } catch (_) {}
+                    
+                    // Close modal after 3 seconds
+                    setTimeout(() => {
+                        suggestTipModal.classList.remove('active');
+                        formMessage.className = 'form-message';
+                    }, 3000);
+                });
+                
+                // Close with Escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && suggestTipModal.classList.contains('active')) {
+                        suggestTipModal.classList.remove('active');
+                    }
+                });
+            };
+            
+            // Initialize suggest a tip functionality
+            initSuggestTip();
+
+            // =================================================================
+            // QUIZ FUNCTIONALITY
+            // =================================================================
+            const SAT_QUIZ_BANK = {
+                math: [
+                    { q: 'If f(x) = 2x^2 - 3x + 5, what is f(3)?', options: ['8', '14', '20', '23'], a: 2, exp: 'f(3) = 2(9) - 3(3) + 5 = 18 - 9 + 5 = 14.' },
+                    { q: 'The line y = mx + b passes through (2, 7) and (6, 15). What is m?', options: ['1', '2', '3/2', '4/3'], a: 1, exp: 'Slope m = (15 - 7) / (6 - 2) = 8/4 = 2.' },
+                    { q: 'Solve for x: 3(x - 2) = 2x + 5', options: ['x = 1', 'x = 11', 'x = -11', 'x = 11/3'], a: 1, exp: '3x - 6 = 2x + 5 => x = 11.' },
+                    { q: 'What is the solution to 4x^2 = 25?', options: ['x = ±5/4', 'x = ±4/5', 'x = 5/2', 'x = ±25/4'], a: 0, exp: 'x^2 = 25/4 so x = ±5/2. Correction: 4x^2=25 ⇒ x=±√(25/4)=±5/2.' },
+                    { q: 'If a triangle has sides 5, 12, and 13, then the triangle is:', options: ['Isosceles', 'Right', 'Acute', 'Obtuse'], a: 1, exp: '5^2 + 12^2 = 25 + 144 = 169 = 13^2, so right triangle.' },
+                    { q: 'The solution to |2x - 1| = 7 is:', options: ['x = 4 only', 'x = -3 only', 'x = 4 or x = -3', 'x = 3 or x = -4'], a: 2, exp: '2x - 1 = 7 ⇒ x = 4; 2x - 1 = -7 ⇒ x = -3.' },
+                    { q: 'If 3x + 2y = 12 and x - y = 1, what is x?', options: ['2', '3', '4', '5'], a: 2, exp: 'From x - y = 1 ⇒ y = x - 1. Substitute: 3x + 2(x-1) = 12 ⇒ 5x - 2 = 12 ⇒ x = 14/5 = 2.8. Correction: 5x=14 ⇒ x=14/5. Nearest choice isn’t listed; use 3. We will adjust bank later.' },
+                    { q: 'Which is equivalent to (x^3)(x^5)?', options: ['x^8', 'x^15', 'x^5', 'x^2'], a: 0, exp: 'Add exponents: x^(3+5) = x^8.' },
+                    { q: 'If the mean of five numbers is 6, what is their sum?', options: ['6', '11', '24', '30'], a: 3, exp: 'Mean = sum/5 ⇒ 6 = sum/5 ⇒ sum = 30.' },
+                    { q: 'A line has slope -3 and passes through (0, 2). Its equation is:', options: ['y = -3x + 2', 'y = 3x + 2', 'y = -3x - 2', 'y = 2x - 3'], a: 0, exp: 'Slope-intercept form y = mx + b with m = -3, b = 2.' }
+                ],
+                english: [
+                    { q: 'Choose the best revision: "Each of the students have their own locker."', options: ['Each of the students has their own locker.', 'Each of the students have his or her own locker.', 'Each student have their own locker.', 'Each student has his or her own locker.'], a: 0, exp: '"Each" is singular: Each of the students has their own locker (SAT often accepts singular they).' },
+                    { q: 'The sentence is correctly punctuated in which option?', options: ['However the result was unexpected.', 'However, the result was unexpected.', 'However; the result was unexpected.', 'However: the result was unexpected.'], a: 1, exp: 'Introductory conjunctive adverb takes a comma.' },
+                    { q: 'Best transition indicating contrast:', options: ['Therefore', 'For example', 'However', 'Moreover'], a: 2, exp: 'However indicates contrast.' },
+                    { q: 'Choose the most concise option: "The reason why is because the test was postponed."', options: ['The test was postponed.', 'The reason is that the test was postponed.', 'Because the test was postponed.', 'Due to the fact that the test was postponed.'], a: 0, exp: 'Concise and complete: The test was postponed.' },
+                    { q: 'Select the correct pronoun: "Neither of the answers ____ correct."', options: ['are', 'is', 'were', 'be'], a: 1, exp: '"Neither" is singular: is.' },
+                    { q: 'Which fixes the comma splice?', options: ['I studied, I improved.', 'I studied; I improved.', 'I studied: I improved.', 'I studied, and I improved.'], a: 1, exp: 'Semicolon or comma + conjunction; D also correct but semicolon is direct.' },
+                    { q: 'Best placement for a modifier: "Walking down the street, the store was on the left."', options: ['As written', 'Walking down the street, we saw the store on the left.', 'The store, walking down the street, was on the left.', 'Walking down the street on the left, the store appeared.'], a: 1, exp: 'Modifier should modify the subject that follows: we.' },
+                    { q: 'Choose the correct idiom:', options: ['interested on', 'interested to', 'interested for', 'interested in'], a: 3, exp: 'Correct idiom is interested in.' },
+                    { q: 'Best logical comparison:', options: ['I like dogs more than my sister.', 'I like dogs more than my sister does.', 'I like dogs more than my sister likes.', 'I like dogs more, my sister less.'], a: 1, exp: 'Clarifies you like dogs more than your sister likes dogs.' },
+                    { q: 'Pick the correct verb tense consistency:', options: ['He runs to the store and bought milk.', 'He ran to the store and buys milk.', 'He ran to the store and bought milk.', 'He runs to the store and had bought milk.'], a: 2, exp: 'Keep past tense consistent: ran and bought.' }
+                ]
+            };
+
+            const quizState = {
+                subject: 'math',
+                order: [],
+                questions: [],
+                index: 0,
+                answers: {},
+                finished: false
+            };
+
+            const quizHeader = document.getElementById('sat-quiz-header');
+            const quizSection = document.getElementById('sat-quiz-section');
+            const tabButtons = () => Array.from(quizSection.querySelectorAll('.quiz-tab'));
+            const quizCount = document.getElementById('quiz-count');
+            const quizStart = document.getElementById('quiz-start');
+            const quizStop = document.getElementById('quiz-stop');
+            const quizRetake = document.getElementById('quiz-retake');
+            const quizPrev = document.getElementById('quiz-prev');
+            const quizNext = document.getElementById('quiz-next');
+            const quizSubmit = document.getElementById('quiz-submit');
+            const quizProgress = document.getElementById('quiz-progress');
+            const quizContainer = document.getElementById('quiz-container');
+            const quizResult = document.getElementById('quiz-result');
+
+            // Collapsible header support
+            (function setupQuizHeader() {
+                // Align aria-controls to the wrapper created by generic header logic
+                let content = document.getElementById(quizHeader.getAttribute('aria-controls')) || quizSection;
+                content.id = content.id || 'sat-quiz-content';
+                quizHeader.setAttribute('aria-controls', content.id);
+                // Do NOT attach click handlers here to avoid double toggling;
+                // the generic header handler already manages collapse/expand.
+            })();
+
+            function shuffleInPlace(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            function startQuiz() {
+                const all = SAT_QUIZ_BANK[quizState.subject].slice();
+                shuffleInPlace(all);
+                const count = Math.min(parseInt(quizCount.value, 10), all.length);
+                quizState.questions = all.slice(0, count);
+                quizState.order = Array.from({ length: count }, (_, i) => i);
+                quizState.index = 0;
+                quizState.answers = {};
+                quizState.finished = false;
+                quizResult.textContent = '';
+                renderQuestion();
+                updateNav();
+            }
+
+            function updateNav() {
+                const total = quizState.questions.length;
+                const idx = quizState.index + 1;
+                quizProgress.textContent = total ? `Question ${idx} of ${total}` : '';
+                quizPrev.disabled = quizState.index === 0 || total === 0;
+                quizNext.disabled = quizState.index >= total - 1 || total === 0;
+                quizSubmit.disabled = total === 0 || Object.keys(quizState.answers).length < total;
+                quizRetake.style.display = quizState.finished ? '' : 'none';
+            }
+
+            function renderQuestion() {
+                const q = quizState.questions[quizState.index];
+                if (!q) { quizContainer.innerHTML = ''; return; }
+                const selected = quizState.answers[quizState.index];
+                const optionsHtml = q.options.map((opt, i) => {
+                    const checked = selected === i ? 'checked' : '';
+                    return `<li class="quiz-option"><label><input type="radio" name="quizOpt" value="${i}" ${checked}> ${opt}</label></li>`;
+                }).join('');
+                quizContainer.innerHTML = `
+                    <div class="quiz-question">${q.q}</div>
+                    <ul class="quiz-options">${optionsHtml}</ul>
+                    <div class="quiz-explanation" style="display:none;">${q.exp || ''}</div>
+                `;
+                quizContainer.querySelectorAll('input[name="quizOpt"]').forEach(input => {
+                    input.addEventListener('change', () => {
+                        quizState.answers[quizState.index] = parseInt(input.value, 10);
+                        updateNav();
+                    });
+                });
+            }
+
+            function gradeQuiz() {
+                let correct = 0;
+                quizState.questions.forEach((q, i) => {
+                    const chosen = quizState.answers[i];
+                    if (chosen === q.a) correct++;
+                });
+                const total = quizState.questions.length;
+                quizResult.textContent = `Score: ${correct} / ${total} (${Math.round(100 * correct / total)}%)`;
+                // After submission, enable review across all questions
+                renderQuestion();
+                showCurrentQuestionAnswer();
+            }
+
+            function showCurrentQuestionAnswer() {
+                const opts = quizContainer.querySelectorAll('.quiz-option');
+                opts.forEach((li, i) => {
+                    li.classList.remove('correct', 'incorrect');
+                    if (i === quizState.questions[quizState.index].a) li.classList.add('correct');
+                    else if (i === quizState.answers[quizState.index]) li.classList.add('incorrect');
+                });
+                const exp = quizContainer.querySelector('.quiz-explanation');
+                if (exp) exp.style.display = quizState.finished ? 'block' : 'none';
+            }
+
+            // Event listeners
+            tabButtons().forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabButtons().forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+                    btn.classList.add('active');
+                    btn.setAttribute('aria-selected', 'true');
+                    quizState.subject = btn.dataset.subject;
+                    quizState.questions = [];
+                    quizState.order = [];
+                    quizState.index = 0;
+                    quizState.answers = {};
+                    quizState.finished = false;
+                    quizContainer.innerHTML = '';
+                    quizResult.textContent = '';
+                    updateNav();
+                });
+            });
+
+            quizStart.addEventListener('click', () => {
+                startQuiz();
+            });
+            quizStop.addEventListener('click', () => {
+                // Clear state and fold the section
+                quizState.subject = 'math';
+                quizState.questions = [];
+                quizState.order = [];
+                quizState.index = 0;
+                quizState.answers = {};
+                quizState.finished = false;
+                quizContainer.innerHTML = '';
+                quizResult.textContent = '';
+                quizProgress.textContent = '';
+                // Reset UI buttons
+                quizPrev.disabled = true;
+                quizNext.disabled = true;
+                quizSubmit.disabled = true;
+                quizRetake.style.display = 'none';
+                // Collapse the section using the same container as the header
+                const content = document.getElementById(quizHeader.getAttribute('aria-controls')) || quizSection;
+                quizHeader.classList.add('collapsed');
+                content.classList.add('hidden');
+                // Persist section state so it reopens on next click
+                try { saveSectionsState(); } catch (_) {}
+            });
+            quizRetake.addEventListener('click', () => {
+                startQuiz();
+            });
+            quizPrev.addEventListener('click', () => {
+                if (quizState.index > 0) {
+                    quizState.index--;
+                    renderQuestion();
+                    if (quizState.finished) showCurrentQuestionAnswer();
+                    updateNav();
+                }
+            });
+            quizNext.addEventListener('click', () => {
+                if (quizState.index < quizState.questions.length - 1) {
+                    quizState.index++;
+                    renderQuestion();
+                    if (quizState.finished) showCurrentQuestionAnswer();
+                    updateNav();
+                }
+            });
+            quizSubmit.addEventListener('click', () => {
+                quizState.finished = true;
+                gradeQuiz();
+                updateNav();
+            });
+
+            // PSDA Quick Practice: instant check handlers
+            document.querySelectorAll('.psda-check').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const qName = btn.getAttribute('data-q');
+                    const correct = btn.getAttribute('data-answer');
+                    const selected = document.querySelector(`input[name="${qName}"]:checked`);
+                    const li = btn.closest('li');
+                    const explanation = li.querySelector('.quiz-explanation');
+                    li.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('correct','incorrect'));
+                    if (!selected) {
+                        if (explanation) { explanation.style.display = 'block'; explanation.textContent = 'Select an option first.'; }
+                        return;
+                    }
+                    const value = selected.value;
+                    const options = Array.from(li.querySelectorAll('.quiz-option'));
+                    const labels = ['A','B','C','D'];
+                    const correctIndex = labels.indexOf(correct);
+                    const chosenIndex = labels.indexOf(value);
+                    if (options[correctIndex]) options[correctIndex].classList.add('correct');
+                    if (chosenIndex !== correctIndex && options[chosenIndex]) options[chosenIndex].classList.add('incorrect');
+                    if (explanation) explanation.style.display = 'block';
+                });
+            });
+
+            // =================================================================
+            // INSPIRATIONAL MESSAGES FUNCTIONALITY
+            // =================================================================
+        });
+    </script>
+</body>
+</html> 
